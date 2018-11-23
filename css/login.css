@@ -1,0 +1,287 @@
+p{
+    color: black;
+    font-size: 100px;;
+    font-family: "Bahnschrift Condensed";
+    text-align: center;
+    letter-spacing: 3px;
+    padding: 0;
+    margin: 0;
+  }
+  .hidden {
+    display: none;
+  }.redborder {
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+  }
+  .polkadot{
+      background: white;
+      display: inline-block;
+      background-image:
+      radial-gradient(#d3d3d3 8%, transparent 0),
+      radial-gradient(#d3d3d3 8%, transparent 0);
+      background-size: 40px 40px;
+      background-position: 0 0, 20px 20px;
+  }
+
+  .grid-container {
+      display: grid;
+      grid-gap: 10px;
+      background-color: #2196F3;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      padding-left: 10px;
+      padding-right: 10px;
+      border-radius: 10px;
+      width: 50%;
+      margin: auto;
+      margin-top:50px;
+  }
+  .grid-container > div {
+      background-color: white;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+
+  .columncontainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .rowcontainer {
+    display: flex;
+    flex-direction: row;
+  }
+  .spacebetweencontainer {
+    justify-content: space-around;
+  }
+  .verylargemarginright {
+    margin-right: 50px;
+  }
+  .largemarginright{
+    margin-right: 150px;
+  }
+  .largemarginleft {
+    margin-left: 300px;
+  }
+  .largemarginleft {
+    margin-left: 300px;
+  }
+  .mediummargintop {
+    margin-top: 50px;
+  }
+  .mediummarginleft {
+    margin-left: 50px;
+  }
+  .mediummarginbottom {
+    margin-bottom: 50px;
+  }
+  .mediummarginright {
+    margin-right: 50px;
+  }
+  .smallmarginbottom {
+    margin-bottom: 20px;
+  }
+  .smallmargintop {
+    margin-top: 15px;
+  }
+  .smallmarginleft {
+    margin-left: 15px;
+  }
+  .smallpaddingtop {
+    padding-top: 15px;
+  }
+  .smallpadding {
+    padding: 10px 10px;
+  }
+  .verysmallpaddingleft {
+    padding-left: 7.5px;
+  }
+  .verysmallpaddingright {
+    padding-right: 7.5px;
+  }
+  .mediumpaddingtop {
+    padding-top: 50px;
+  }
+  .mediumpaddingbottom {
+    padding-bottom: 35px;
+  }
+  .largeheight {
+    height: 300px;
+  }
+  .mediumheight {
+    height: 150px;
+  }
+  .fullwidthcontainer {
+    width: 100%;
+  }
+  .largewidthcontainer {
+    width: 80%;
+  }
+  .smallwidthcontainer {
+    width: 30%;
+  }
+  .largewidth {
+    width: 1150px;
+  }
+  .mediumwidth {
+    width: 500px;
+  }
+  .verysmallflex {
+    flex: 0.2;
+  }
+  .smallflex {
+    flex: 1;
+  }
+  .mediumflex {
+    flex: 3;
+  }
+  .medium2flex {
+    flex: 3.8;
+  }
+  .largeflex {
+    flex: 5.5;
+  }
+  .roundimg {
+    border-radius: 50%;
+  }
+  .roundborder {
+    border-radius: 10px;
+  }
+  .smallborder {
+    border: 2px;
+  }
+  .mediumborder {
+    border: 8px;
+  }
+  .noborder {
+    border-style: none;
+  }
+  .yellowborder {
+    border-color: #F2D800
+  }
+  .greyborder {
+    border-color: grey;
+  }
+  .solidborder {
+    border-style: solid;
+  }
+  .largeimg {
+    height: 180px;
+    width: 180px;
+  }
+  .mediumimg {
+    height: 140px;
+    width: 140px;
+  }
+  .smallimg {
+    height: 50px;
+    width: 50px;
+  }
+  .verysmallimg {
+    height: 35px;
+    width: 35px;
+  }
+  .flexcenter {
+    align-items: center;
+  }
+  .flexstart {
+    align-items: flex-start;
+  }
+  .selfaligncenter {
+    align-self: center;
+  }
+  .selfalignend {
+    align-self: flex-end;
+  }
+  .helvetica {
+    font-family: helvetica;
+  }
+  .boldfont {
+    font-weight: bold;
+  }
+  .whitefont {
+    color: white;
+  }
+  .yellowfont {
+    color: #F26600;
+  }
+  .darkbluebg {
+    background-color: #00374C;
+  }
+  .largefont {
+    font-size: 60px;
+  }
+  .mediumfont {
+    font-size: 25px;
+  }
+  .smallfont {
+    font-size: 10px;
+  }
+  .verylargefont {
+    font-size: 80px;
+  }
+  #browsefile {
+    border-color: grey;
+    border-style: solid;
+    font-size: 25px;
+    padding: 10px 10px;
+  }
+  #dp-file {
+    display:none;
+  }
+  #savebt {
+    font-size: 25px;
+    font-family: helvetica;
+    color: white;
+    background-color: #00AEEF;
+    border-radius: 10px;
+    border-style: none;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    float: right;
+    margin-right: 500px;
+  }
+  #backbt {
+    font-size: 25px;
+    font-family: helvetica;
+    color: red;
+    background-color: white;
+    border-color: red;
+    border-style: solid;
+    border-radius: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 50px;
+    float: left;
+  }
+
+  .textalignright{
+    text-align: right;
+  }
+
+  input[type=submit] {
+    background-color:white;
+    border-color: #f26600;
+    color : #f26600;
+    padding: 4px 10px;
+    margin : auto;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 50px;
+    font-family: "calibri";
+    display: flex;
+    flex:1;
+    text-align: center;
+  }
+
+  input[type=submit]:disabled {
+    background-color: grey;
+    border: none;
+    color: white;
+  }

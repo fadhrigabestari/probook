@@ -1,0 +1,64 @@
+* {
+  margin:0px;
+}
+.header {
+  display:flex;
+  height: 88px;
+}
+.headercolumn {
+  display: flex;
+  flex-direction: column;
+}
+#title {
+  background-color: #00AEEF;
+  font-size: 60px;
+  padding-left: 30px;
+  font-family: helvetica;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  flex: 7;
+}
+#pro {
+  color: #F2D800;
+}
+#book {
+  color: white;
+}
+#greetuser {
+  background-color: #00AEEF;
+  font-size: 30px;
+  font-family: helvetica;
+  flex: 2;
+  color: white;
+  padding-top: 34px;
+  padding-bottom: 15px;
+  padding-right: 15px;
+  text-align: right;
+  text-decoration: underline;
+}
+#logo {
+  height: 100%;
+  width: auto;
+  flex: 0.5;
+}
+#onofflogo {
+  height: 100%;
+  width: auto;
+}
+.tablink {
+  background-color: #0094CC;
+  color: white;
+  font-size: 40px;
+  float: left;
+  cursor: pointer;
+  border-top: none;
+  border-left : 1px solid black;
+  border-right: 1px solid black;
+  outline: none;
+  cursor: pointer;
+  padding: 20px 20px;
+  width: 33.33%;
+}
+.tablink:hover, .tablink-active {
+  background-color: #F26600;
+}

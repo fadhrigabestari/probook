@@ -1,0 +1,261 @@
+.columncontainer {
+  display: flex;
+  flex-direction: column;
+}
+.rowcontainer {
+  display: flex;
+  flex-direction: row;
+}
+.spacebetweencontainer {
+  justify-content: space-between;
+}
+.verylargemarginleft {
+  margin-left: 500px;
+}
+.verylargemarginright {
+  margin-right: 500px;
+}
+.normalmarginright {
+  margin-right: 200px;
+}
+.largemarginleft {
+  margin-left: 300px;
+}
+.largemarginleft {
+  margin-left: 300px;
+}
+.normalmarginleft {
+  margin-left: 150px;
+}
+.abnormalmarginleft {
+  margin-left: 145px;
+}
+.mediummargintop {
+  margin-top: 50px;
+}
+.mediummarginleft {
+  margin-left: 50px;
+}
+.mediummarginbottom {
+  margin-bottom: 50px;
+}
+.mediummarginright {
+  margin-right: 50px;
+}
+.smallmarginbottom {
+  margin-bottom: 20px;
+}
+.smallmargintop {
+  margin-top: 15px;
+}
+.normalmargintop {
+  margin-top: 30px;
+}
+.smallmarginleft {
+  margin-left: 15px;
+}
+.smallpaddingtop {
+  padding-top: 15px;
+}
+.smallpadding {
+  padding: 10px 10px;
+}
+.verysmallpaddingleft {
+  padding-left: 7.5px;
+}
+.verysmallpaddingright {
+  padding-right: 7.5px;
+}
+.mediumpaddingtop {
+  padding-top: 50px;
+}
+.abnormalmargintop {
+  margin-top: 30px;
+}
+.mediumpaddingbottom {
+  padding-bottom: 35px;
+}
+.largeheight {
+  height: 300px;
+}
+.mediumheight {
+  height: 150px;
+}
+.smallheight {
+  height: 30px;
+}
+.morewidthcontainer {
+  width: 830px;
+}
+.fullwidthcontainer {
+  width: 100%;
+}
+.largewidthcontainer {
+  width: 80%;
+}
+.smallwidthcontainer {
+  width: 30%;
+}
+.largewidth {
+  width: 1150px;
+}
+.mediumwidth {
+  width: 500px;
+}
+.smallflex {
+  flex: 1;
+}
+.mediumflex {
+  flex: 3;
+}
+.largeflex {
+  flex: 5;
+}
+.roundimg {
+  border-radius: 50%;
+}
+.roundborder {
+  border-radius: 10px;
+}
+.smallborder {
+  border: 2px;
+}
+.mediumborder {
+  border: 8px;
+}
+.noborder {
+  border-style: none;
+}
+.yellowborder {
+  border-color: #F2D800
+}
+.greyborder {
+  border-color: grey;
+}
+.solidborder {
+  border-style: solid;
+}
+.largeimg {
+  height: 180px;
+  width: 180px;
+}
+.mediumimg {
+  height: 140px;
+  width: 140px;
+}
+.smallimg {
+  height: 50px;
+  width: 50px;
+}
+.verysmallimg {
+  height: 35px;
+  width: 35px;
+}
+.flexcenter {
+  align-items: center;
+}
+.flexstart {
+  align-items: flex-start;
+}
+.selfaligncenter {
+  align-self: center;
+}
+.selfalignend {
+  align-self: flex-end;
+}
+.helvetica {
+  font-family: helvetica;
+}
+.boldfont {
+  font-weight: bold;
+}
+.whitefont {
+  color: white;
+}
+.yellowfont {
+  color: #F26600;
+}
+.darkbluebg {
+  background-color: #00374C;
+}
+.largefont {
+  font-size: 60px;
+}
+.mediumfont {
+  font-size: 25px;
+}
+.normalfont {
+  font-size: 20px;
+}
+.smallfont {
+  font-size: 10px;
+}
+.verylargefont {
+  font-size: 80px;
+}
+.floatright {
+  float: right;
+}
+.redborder {
+  border-color: red;
+  border-style: solid;
+  border-width: 2px;
+}
+#browsefile {
+  border-color: grey;
+  border-style: solid;
+  font-size: 25px;
+  padding: 10px 10px;
+}
+#savebt {
+  font-size: 25px;
+  font-family: helvetica;
+  color: white;
+  background-color: #00AEEF;
+  border-radius: 10px;
+  border-style: none;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  float: right;
+  margin-right: 200px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+#savebt:disabled {
+  background-color: grey;
+}
+#backbt {
+  font-size: 25px;
+  font-family: helvetica;
+  color: red;
+  background-color: white;
+  border-color: red;
+  border-style: solid;
+  border-radius: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 50px;
+  float: left;
+  margin-left: 200px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+#browsebt {
+  font-size: 15px;
+  font-family: helvetica;
+  background-color: white;
+  border-style: solid;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+#dp-file {
+  display: none;
+}

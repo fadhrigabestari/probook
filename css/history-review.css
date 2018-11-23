@@ -1,0 +1,125 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.header1{
+    display: flex;
+    justify-content: inherit;
+}
+
+form{
+    margin-top: 200px;
+}
+
+.bookname{
+    font-size: 80px;
+    color: #F26600;
+    font-family: calibri;
+    margin-top: 40px;
+    margin-left: 50px;  
+}
+.author{
+    font-size: 30px;
+    color: black;
+    font-family: calibri;
+    margin-left: 50px;
+}
+.image {
+    height: 170px;
+    width: 170px;
+    border: 2px;
+    border-style: solid;
+    margin-top: 40px;
+    margin-right: 50px;
+}
+.star {
+    height: 100px;
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.star:hover{
+    background: url('../img/filledstar.png');
+}
+
+.rating, .comment{
+    font-size: 40px;
+    color: #13364A;
+    font-family: helvetica;
+    margin-left: 50px;
+    margin-bottom: 15px;
+    margin-top:50px;
+    
+    font-weight: bold;
+}
+textarea{
+    display: inline-block;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 92%;
+}
+input[type=submit] {
+    background-color:#0094CC;
+    border-color: #0094CC;
+    color : white;
+    padding: 2px 10px;
+    margin: 4px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: "calibri";
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+    cursor: pointer;
+}
+
+.spacebetweencontainer {
+    justify-content: space-between;
+  }
+  #backbt {
+    font-size: 25px;
+    font-family: helvetica;
+    color: red;
+    background-color: white;
+    border-color: red;
+    border-style: solid;
+    border-radius: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 50px;
+    float: left;
+    margin-top: 50px;
+    cursor: pointer;
+  }
+  #submitbt {
+    font-size: 25px;
+    font-family: helvetica;
+    color: white;
+    background-color: #00AEEF;
+    border-radius: 10px;
+    border-style: none;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    float: right;
+    margin-right: 50px;
+    margin-top: 50px;
+  }
+
+  .redborder {
+    border-color: red;
+    border-style: solid;
+    border-width: 2px;
+  }
+
