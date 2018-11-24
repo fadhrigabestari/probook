@@ -8,6 +8,8 @@ public class Book implements Serializable {
     private String author;
     private String cover;
     private String description;
+    private String category;
+    private double price;
 
     public String getIdBook() {
         return idBook;
@@ -48,4 +50,22 @@ public class Book implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+   
 }
