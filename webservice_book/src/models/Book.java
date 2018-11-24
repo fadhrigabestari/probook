@@ -84,7 +84,7 @@ public class Book implements Serializable {
         return rating;
     }
 
-    public void setSaleability(float rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

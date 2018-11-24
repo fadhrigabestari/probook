@@ -96,6 +96,12 @@ public class BookServiceImpl implements BookService {
                     price = books.getJSONObject(i).getJSONObject("saleInfo").getJSONObject("listPrice").getDouble("amount");
                 }
 
+                //get rating
+                float rating=0;
+                if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("averageRating")) {
+                    rating=books.getJSONObject(i).getJSONObject("volumeInfo").getFloat("averageRating");
+                }
+
 
                 //create new book
                 Book a_book = new Book();
@@ -107,6 +113,7 @@ public class BookServiceImpl implements BookService {
                 a_book.setCategories(categories);
                 a_book.setPrice(price);
                 a_book.setSaleability(saleability);
+                a_book.setRating(rating);
 
                 array_book[i] = a_book;
             }
