@@ -6,6 +6,9 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
+// import org.json.JSONException;
+import models.Book;
+
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface BookService {
