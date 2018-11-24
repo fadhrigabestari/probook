@@ -1,16 +1,20 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
 
 public class Book implements Serializable {
     private String idBook;
     private String title;
-    private String author;
+    private String[] authors;
     private String cover;
     private String description;
-    private String category;
+    private String[] categories;
     private boolean saleability;
     private double price;
+    private float rating;
+
 
     public String getIdBook() {
         return idBook;
@@ -28,12 +32,12 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String[] getAuthors() {
+        return Arrays.copyOf(authors, authors.length);
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(String[] authors) {
+        this.authors = Arrays.copyOf(authors, authors.length); 
     }
 
     public String getCover() {
@@ -52,12 +56,12 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategories(String[] categories) {
+        this.categories = Arrays.copyOf(categories, categories.length);
     }
 
-    public String getCategory() {
-        return category;
+    public String[] getCategories() {
+        return Arrays.copyOf(categories, categories.length);
     }
 
     public double getPrice() {
@@ -72,8 +76,16 @@ public class Book implements Serializable {
         return saleability;
     }
 
-    public void setPrice(boolean saleability) {
+    public void setSaleability(boolean saleability) {
         this.saleability = saleability;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setSaleability(float rating) {
+        this.rating = rating;
     }
 
 
