@@ -1,44 +1,61 @@
+
 package services;
 
-import models.Book;
-
-import javax.jws.WebService;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Set;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import javax.jws.WebService;
 
-@WebService(endpointInterface = "services.BookService")
+import probook.Book;
+
+@WebService(endpointInterface = "probook.BookService")  
 public class BookServiceImpl implements BookService {
-    private static Map<String, Book> books = new HashMap<String, Book>();
 
+    
     @Override
-    public boolean addBook(Book b) {
-        if(books.get(b.getIdBook()) == null) return false;
-        books.put(b.getIdBook(), b);
-        return true;
-    }
-
-    @Override
-    public boolean deleteBook(String idBook) {
-        if(books.get(idBook) == null) return false;
-        books.remove(idBook);
-        return true;
-    }
-
-    @Override
-    public Book getBook(String idBook) {
-        return books.get(idBook);
-    }
-
-    @Override
-    public Book[] getAllBook() {
-        Set<String> ids = books.keySet();
-        Book[] b = new Book[ids.size()];
-        int i = 0;
-        for(String id : ids) {
-            b[i] = books.get(id);
-            i++;
+    public Book[] searchBook(String title) throws IOException {
+        Book[] array_book = new Book[1];
+        String get_url = "https://www.googleapis.com/books/v1/volumes?q=" + title;
+        System.out.println(get_url);
+        URL url = new URL(get_url);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();   
+        con.setRequestMethod("GET");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+        int responseCode = con.getResponseCode();
+        System.out.println("GET Response Code :: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) { 
+            // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            // print result
+            System.out.println(response.toString());
+        } else {
+            System.out.println("GET request not worked");
         }
-        return b;
+        return array_book;
     }
+    
+    @Override
+    public Book detailBook(String id) {
+        return (new Book());
+    }
+    
+    @Override
+    public boolean buyBook(String id, int n, String account_number) {
+        return true;
+    }
+    
+    @Override
+    public String recommendBook(String category) {
+        return "test";
+    }
+
 }
