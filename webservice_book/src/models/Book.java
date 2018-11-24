@@ -9,6 +9,7 @@ public class Book implements Serializable {
     private String cover;
     private String description;
     private String category;
+    private boolean saleability;
     private double price;
 
     public String getIdBook() {
@@ -66,6 +67,15 @@ public class Book implements Serializable {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public boolean getSaleability() {
+        return saleability;
+    }
+
+    public void setPrice(boolean saleability) {
+        this.saleability = saleability;
+    }
+
 
    
 }
