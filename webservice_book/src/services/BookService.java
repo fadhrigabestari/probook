@@ -1,7 +1,7 @@
+
 package services;
 
-import models.Book;
-
+import java.io.IOException;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -9,15 +9,16 @@ import javax.jws.soap.SOAPBinding;
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface BookService {
-    @WebMethod
-    public boolean addBook(Book b);
 
-    @WebMethod
-    public boolean deleteBook(String idBook);
-
-    @WebMethod
-    public Book getBook(String idBook);
-
-    @WebMethod
-    public Book[] getAllBook();
+	@WebMethod
+	public Book[] searchBook(String title)  throws IOException;
+	
+	@WebMethod
+	public Book detailBook(String id);
+	
+	@WebMethod
+	public boolean buyBook(String id, int n, String account_number);
+	
+	@WebMethod
+	public String recommendBook(String category);
 }
