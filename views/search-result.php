@@ -37,8 +37,7 @@
           <div class='bookdesc'><?php e($results[$i]->description);?></div>
         </div>
       </div>
-      <!-- <a href='<?php eu('detail', $result['idBook']);?>'> -->
-      <a>
+      <a href='<?php eu('detail', $results[$i]->idBook);?>'>
         <button class='detail'>Detail</button>
       </a>
     </div>
