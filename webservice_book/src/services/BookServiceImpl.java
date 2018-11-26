@@ -145,7 +145,6 @@ public class BookServiceImpl implements BookService {
             float rating;
             int ratingsCount;
 
-
             // get title
             if(!volInfo.isNull("title")) {
                 title = volInfo.getString("title");

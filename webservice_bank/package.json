@@ -1,0 +1,18 @@
+{
+  "name": "webservice_bank",
+  "version": "1.0.0",
+  "description": "RESTful webservice that emulates bank services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fadhriga Bestari - 13516154",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
