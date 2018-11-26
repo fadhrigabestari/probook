@@ -154,6 +154,7 @@ public class BookServiceImpl implements BookService {
                 int i = 0;
                 for(Object author : arrAuthor) {
                     authors[i] = author.toString();
+                    i++;
                 }
             } else {
                 authors = new String[1];
@@ -181,6 +182,7 @@ public class BookServiceImpl implements BookService {
                 int i = 0;
                 for(Object category : arrCategories) {
                     categories[i] = category.toString();
+                    i++;
                 }
             } else {
                 categories = new String[1];
