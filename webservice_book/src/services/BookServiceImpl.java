@@ -15,11 +15,13 @@ import java.util.Arrays;
 
 
 import models.Book;
+import utilities.BookServiceUtil;
+
+import static utilities.BookServiceUtil.getConnection;
+import static utilities.BookServiceUtil.toJSON;
 
 @WebService(endpointInterface = "services.BookService")  
 public class BookServiceImpl implements BookService {
-
-    
     @Override
     public Book[] searchBook(String title_input) throws IOException {
         Book[] array_book = new Book[1];
@@ -27,22 +29,11 @@ public class BookServiceImpl implements BookService {
         String get_url = "https://www.googleapis.com/books/v1/volumes?q=" + title_input;
         System.out.println(get_url);
         URL url = new URL(get_url);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();   
-        con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        int responseCode = getConnection(con);
         if (responseCode == HttpURLConnection.HTTP_OK) { 
             // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-    
-            JSONObject json = new JSONObject(response.toString());
+            JSONObject json = toJSON(con);
             JSONArray books = json.getJSONArray("items");
             int count_books = books.length();
             array_book = new Book[count_books+1];
@@ -67,8 +58,8 @@ public class BookServiceImpl implements BookService {
                         authors[j] = authors_array.getString(j);
                     }
                 } else authors[0] = "-";
-                
-                
+
+
                 //get cover
                 String cover="-";
                 if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("imageLinks")) 
@@ -126,8 +117,107 @@ public class BookServiceImpl implements BookService {
     }
     
     @Override
-    public Book detailBook(String id) {
-        return (new Book());
+    public Book detailBook(String id) throws IOException {
+        Book detailBook = new Book();
+        String getURL = "https://www.googleapis.com/books/v1/volumes/" + id + "?";
+        URL url = new URL(getURL);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        int responseCode = getConnection(con);
+        System.out.println("GET Response Code :: " + responseCode);
+        if(responseCode == HttpURLConnection.HTTP_OK) {
+            // convert response into json
+            JSONObject json = toJSON(con);
+            JSONObject volInfo = json.getJSONObject("volumeInfo");
+            JSONObject saleInfo = json.getJSONObject("saleInfo");
+            // containers
+            String title;
+            String[] authors = new String[1];
+            String cover;
+            String description;
+            String[] categories = new String[1];
+            boolean saleability;
+            double price;
+            float rating;
+
+
+            // get title
+            if(!volInfo.isNull("title")) {
+                title = volInfo.getString("title");
+            } else {
+                title = "-";
+            }
+
+            // get authors
+            if(!volInfo.isNull("authors")) {
+                JSONArray arrAuthor = volInfo.getJSONArray("authors");
+                authors = new String[arrAuthor.length()];
+                int i = 0;
+                for(Object author : arrAuthor) {
+                    authors[i] = author.toString();
+                }
+            } else {
+                authors = new String[1];
+                authors[0] = "-";
+            }
+
+            // get cover
+            if(!volInfo.isNull("imageLinks")) {
+                cover = volInfo.getJSONObject("imageLinks").getString("smallThumbnail");
+            } else {
+                cover = "-";
+            }
+
+            // get description
+            if(!volInfo.isNull("description")) {
+                description = volInfo.getString("description");
+            } else {
+                description = "-";
+            }
+
+            // get categories
+            if(!volInfo.isNull("categories")) {
+                JSONArray arrCategories = volInfo.getJSONArray("categories");
+                categories = new String[arrCategories.length()];
+                int i = 0;
+                for(Object category : arrCategories) {
+                    categories[i] = category.toString();
+                }
+            } else {
+                categories = new String[1];
+                categories[0] = "-";
+            }
+
+            // get saleability
+            if(saleInfo.getString("saleability").equals("FOR_SALE")) {
+                price = saleInfo.getJSONObject("listPrice").getDouble("amount");
+                saleability = true;
+            } else {
+                price = 0.0;
+                saleability = false;
+            }
+
+            // get average ratings
+            if(!volInfo.isNull("averageRating")) {
+                rating = volInfo.getFloat("averageRating");
+            } else {
+                rating = 0;
+            }
+
+            //create new book
+            detailBook.setIdBook(id);
+            detailBook.setAuthors(authors);
+            detailBook.setCategories(categories);
+            detailBook.setCover(cover);
+            detailBook.setDescription(description);
+            detailBook.setPrice(price);
+            detailBook.setRating(rating);
+            detailBook.setSaleability(saleability);
+            detailBook.setTitle(title);
+
+        } else {
+            System.out.println("GET request not worked");
+        }
+        return detailBook;
     }
     
     @Override
@@ -139,5 +229,4 @@ public class BookServiceImpl implements BookService {
     public String recommendBook(String category) {
         return "test";
     }
-
 }

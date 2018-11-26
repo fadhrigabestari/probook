@@ -23,6 +23,7 @@
       <root url="jar://$PROJECT_DIR$/lib/stax-ex.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/woodstox-core-asl.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jaxws-rt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/json-20180813.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
