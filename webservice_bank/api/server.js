@@ -3,12 +3,14 @@
 // ======================================
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 // ======================================
 // configurations
 // ======================================
 const port = 8082;
 const routes = require('./routes/bankRoutes');
+app.use(bodyParser.json());
 routes(app);
 
 // ======================================
