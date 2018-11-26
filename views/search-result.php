@@ -31,7 +31,7 @@
             <span>&nbsp;-&nbsp;</span>
             <span class='bookrating'><?php e(number_format($results[$i]->rating,1));?></span>
             <span>/5.0 (</span>
-            <span class='bookvotecount'><?php e(0);?></span>
+            <span class='bookvotecount'><?php e($results[$i]->ratingsCount);?></span>
             <span>&nbsp;votes)</span>
           </div>
           <div class='bookdesc'><?php e($results[$i]->description);?></div>

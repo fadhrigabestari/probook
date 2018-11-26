@@ -77,7 +77,7 @@ public class BookServiceImpl implements BookService {
                 
                 //get saleability and price
                 boolean saleability;
-                Double price;
+                double price;
                 String for_sale = books.getJSONObject(i).getJSONObject("saleInfo").getString("saleability");
                 if (for_sale.equals("NOT_FOR_SALE")) {
                     saleability = false;
@@ -93,6 +93,11 @@ public class BookServiceImpl implements BookService {
                     rating=books.getJSONObject(i).getJSONObject("volumeInfo").getFloat("averageRating");
                 }
 
+                int ratingsCount = 0;
+                if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("ratingsCount")) {
+                    ratingsCount=books.getJSONObject(i).getJSONObject("volumeInfo").getInt("ratingsCount");
+                }
+
                 //create new book
                 Book a_book = new Book();
                 a_book.setIdBook(idBook);
@@ -104,6 +109,7 @@ public class BookServiceImpl implements BookService {
                 a_book.setPrice(price);
                 a_book.setSaleability(saleability);
                 a_book.setRating(rating);
+                a_book.setRatingsCount(ratingsCount);
 
                 array_book[i] = a_book;
             }
@@ -137,6 +143,7 @@ public class BookServiceImpl implements BookService {
             boolean saleability;
             double price;
             float rating;
+            int ratingsCount;
 
 
             // get title
@@ -204,6 +211,13 @@ public class BookServiceImpl implements BookService {
                 rating = 0;
             }
 
+            // get count ratings
+            if(!volInfo.isNull("ratingsCount")) {
+                ratingsCount = volInfo.getInt("ratingsCount");
+            } else {
+                ratingsCount = 0;
+            }
+
             //create new book
             detailBook.setIdBook(id);
             detailBook.setAuthors(authors);
@@ -214,6 +228,7 @@ public class BookServiceImpl implements BookService {
             detailBook.setRating(rating);
             detailBook.setSaleability(saleability);
             detailBook.setTitle(title);
+            detailBook.setRatingsCount(ratingsCount);
 
         } else {
             System.out.println("GET request not worked");

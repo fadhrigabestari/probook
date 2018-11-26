@@ -14,7 +14,7 @@ public class Book implements Serializable {
     private boolean saleability;
     private double price;
     private float rating;
-
+    private int ratingsCount;
 
     public String getIdBook() {
         return idBook;
@@ -37,7 +37,7 @@ public class Book implements Serializable {
     }
 
     public void setAuthors(String[] authors) {
-        this.authors = Arrays.copyOf(authors, authors.length); 
+        this.authors = Arrays.copyOf(authors, authors.length);
     }
 
     public String getCover() {
@@ -72,7 +72,7 @@ public class Book implements Serializable {
         this.price = price;
     }
 
-    public boolean getSaleability() {
+    public boolean isSaleability() {
         return saleability;
     }
 
@@ -88,6 +88,11 @@ public class Book implements Serializable {
         this.rating = rating;
     }
 
+    public int getRatingsCount() {
+        return ratingsCount;
+    }
 
-   
+    public void setRatingsCount(int ratingsCount) {
+        this.ratingsCount = ratingsCount;
+    }
 }
