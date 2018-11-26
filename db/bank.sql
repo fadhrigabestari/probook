@@ -5,6 +5,7 @@ create table Nasabah (
   no_kartu int not null,
   saldo int not null,
   picture varchar(64) default '04a924e79f3653cc41556d71550a07fb.png',
+  unique key (no_kartu),
   primary key (idNasabah)
 ) engine=InnoDB default charset=utf8mb4;
 
