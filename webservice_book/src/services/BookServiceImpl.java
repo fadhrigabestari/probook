@@ -93,7 +93,6 @@ public class BookServiceImpl implements BookService {
                     rating=books.getJSONObject(i).getJSONObject("volumeInfo").getFloat("averageRating");
                 }
 
-
                 //create new book
                 Book a_book = new Book();
                 a_book.setIdBook(idBook);
