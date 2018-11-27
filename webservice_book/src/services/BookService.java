@@ -16,13 +16,13 @@ import models.Book;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface BookService {
 	@WebMethod
-	public Book[] searchBook(String title)  throws IOException;
+	public Book[] searchBook(String title_input)  throws IOException;
 	
 	@WebMethod
 	public Book detailBook(String id) throws IOException;
 
 	@WebMethod
-	public boolean buyBook(String id, int n, String account_number);
+	public boolean buyBook(String id, int n, String account_number) throws Exception;
 	
 	@WebMethod
 	public String recommendBook(String category);

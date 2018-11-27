@@ -56,7 +56,7 @@ exports.transfer = async function(req, res) {
           return;
         }
 
-        if(resdb.balance < amount) {
+        if(parseInt(resdb.balance) < parseInt(amount)) {
           res.status(400).json({message: 'Transfer failed, insufficient balance'});
           return;
         }

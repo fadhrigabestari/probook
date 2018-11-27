@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const port = 8082;
 const routes = require('./routes/bankRoutes');
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 routes(app);
 
 // ======================================

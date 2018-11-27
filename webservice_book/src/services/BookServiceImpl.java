@@ -3,6 +3,7 @@ package services;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.Set;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -16,6 +17,8 @@ import java.util.Arrays;
 
 import models.Book;
 import utilities.BookServiceUtil;
+import utilities.SQLConnect;
+import utilities.HttpConnect;
 
 import static utilities.BookServiceUtil.getConnection;
 import static utilities.BookServiceUtil.toJSON;
@@ -236,7 +239,19 @@ public class BookServiceImpl implements BookService {
     }
     
     @Override
-    public boolean buyBook(String id, int n, String account_number) {
+    public boolean buyBook(String id, int n, String account_number) throws Exception{
+//        double price;
+//        String query = "select price from books where idBook = " + id;
+//        SQLConnect.getConnection();
+//        ResultSet result = SQLConnect.execQuery(query);
+//        while(result.next()) {
+//            price = result.getDouble("price");
+//        }
+//        price *= n;
+        String url = "http://localhost:8082/api/bank/transfer";
+        String senderCard = "16824";
+        String receiverCard = "17436";
+        HttpConnect.sendPost(url, senderCard, receiverCard, 1000);
         return true;
     }
     

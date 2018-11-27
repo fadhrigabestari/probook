@@ -23,5 +23,14 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JAX-WS-Glassfish / JAX-WS 2.2 RI / Metro 1.X / JWSDP 2.2" level="project" />
+    <orderEntry type="library" name="json-20180813" level="project" />
+    <orderEntry type="library" name="apache-commons" level="project" />
+    <orderEntry type="library" name="httpcore-4.4.10" level="project" />
+    <orderEntry type="library" name="httpclient-4.5.6" level="project" />
+    <orderEntry type="library" name="commons-logging-1.2" level="project" />
+    <orderEntry type="library" name="slf4j-log4j12-1.7.25" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.7.25" level="project" />
+    <orderEntry type="library" name="log4j-core-2.11.1" level="project" />
+    <orderEntry type="library" name="log4j-api-2.11.1" level="project" />
   </component>
 </module>

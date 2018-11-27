@@ -81,7 +81,7 @@
           </select>
           </div>
           <input type='hidden' id='idBook' value='<?php e($book->idBook);?>'>
-          <?php $orderurl = json_encode(make_url('order'), JSON_HEX_TAG|JSON_HEX_AMP);?>
+          <?php $orderurl = e('http://localhost:8081/api/books'));?>
           <button class='order' onclick="addOrder(<?php e($orderurl);?>)">Order</button>
         </div>
       </div>
