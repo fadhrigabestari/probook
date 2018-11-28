@@ -38,6 +38,10 @@
                             <div class='mediumfont mediumflex textalignright'>Phone Number</div>
                             <input placeholder="Input phone number" class='smallmarginleft mediumfont largeflex verylargemarginright' id='profile-phone' name='phone' />
                         </div>
+                        <div class='rowcontainer flexstart mediummarginleft smallmargintop '>
+                            <div class='mediumfont mediumflex textalignright'>Card Number</div>
+                            <input placeholder="Input card number" class='smallmarginleft mediumfont largeflex verylargemarginright' id='card-number' name='cardNumber' />
+                        </div>
                         <div class='rowcontainer mediummarginleft smallmargintop mediumfont largeflex '>
                                 <a href="<?php eu('login')?>">
                                         Already have an account?
