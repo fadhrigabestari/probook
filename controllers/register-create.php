@@ -8,6 +8,7 @@ $password_2 = $_POST['confirm-password'];
 $email = $_POST['email'];
 $address = $_POST['address'];
 $phone = $_POST['phone'];
+$card_number = $_POST['card-number'];
 
 global $db_conn;
 
@@ -20,6 +21,8 @@ try {
     throw new Exception('username unavailable');
   if (!check_email($email))
     throw new Exception('email unavailable');
+  if (!check_cardNumber($card_number))
+    throw new Exception('card number unavailable');
 
   $stmt = $db_conn->prepare('insert into Users (name, username, password, email, address, phone)
     values(?, ?, ?, ?, ?, ?)');

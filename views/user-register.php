@@ -39,8 +39,9 @@
                             <input placeholder="Input phone number" class='smallmarginleft mediumfont largeflex verylargemarginright' id='profile-phone' name='phone' />
                         </div>
                         <div class='rowcontainer flexstart mediummarginleft smallmargintop '>
-                            <div class='mediumfont mediumflex textalignright'>Card Number</div>
-                            <input placeholder="Input card number" class='smallmarginleft mediumfont largeflex verylargemarginright' id='card-number' name='cardNumber' />
+                            <div class='mediumfont largeflex textalignright'>Card Number</div>
+                            <input placeholder="Input card number" class='smallmarginleft mediumfont mediumflex' id='profile-card-number' name='card-number'>
+                            <img class='checkmark marginright verysmallmarginleft' id='cardnumbercheck' src='<?php es('img/clear.png');?>'>
                         </div>
                         <div class='rowcontainer mediummarginleft smallmargintop mediumfont largeflex '>
                                 <a href="<?php eu('login')?>">

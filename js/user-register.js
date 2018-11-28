@@ -7,7 +7,7 @@ function redElement(elementId, red) {
   return red;
 }
 
-var checkState = {'usercheck': 0, 'emailcheck': 0};
+var checkState = {'usercheck': 0, 'emailcheck': 0, 'cardnumbercheck':0};
 
 function showCheckmark(checkmarkId, show) {
   // show is tri-state: 1=check, 0=hidden, -1=cross
@@ -76,6 +76,11 @@ function validatePhone() {
   return phone.match(regex);
 }
 
+function validateCardNumber() {
+  card_number = document.getElementById('profile-card-number').value;
+  return (card_number.length > 0 && card_number.length <= 140);
+}
+
 function redName() {
   return redElement('profile-name', !validateName());
 }
@@ -104,6 +109,10 @@ function redPhone() {
   return redElement('profile-phone', !validatePhone());
 }
 
+function redCardNumber() {
+  return redElement('profile-card-number', !validateCardNumber());
+}
+
 document.getElementById('profile-name').onblur = redName;
 document.getElementById('profile-username').onblur = function () {
   if (!redUsername())
@@ -125,11 +134,17 @@ document.getElementById('profile-password').onblur = function () {
 document.getElementById('profile-confirm-password').onblur = redConfirmPassword;
 document.getElementById('profile-address').onblur = redAddress;
 document.getElementById('profile-phone').onblur = redPhone;
+document.getElementById('profile-card-number').onblur = function () {
+  if (!redCardNumber())
+    checkUnique('profile-card-number', 'card-number', 'cardnumbercheck');
+  else
+    showCheckmark('cardnumbercheck', 0);
+};
 
 document.getElementById('registerform').addEventListener("submit", function(event) {
   var invalid = [
     redName(), redUsername(), redEmail(), redPassword(), redConfirmPassword(),
-    redAddress(), redPhone(), function () { for (var k in checkState) if (checkState[k] == -1) return true; return false; }()
+    redAddress(), redPhone(), redCardNumber(), function () { for (var k in checkState) if (checkState[k] == -1) return true; return false; }()
   ];
   if (invalid.some(x => x))
     event.preventDefault();
