@@ -31,6 +31,10 @@
           <div class='normalfont smallflex normalmarginleft'>Phone Number</div>
           <input type='text' class='smallmarginleft normalfont mediumflex normalmarginright' id='profile-phone' name='phone' value='<?php e($result['phone']);?>'>
         </div>
+        <div class='rowcontainer flexstart mediummarginleft smallmargintop smallmarginbottom'>
+          <div class='normalfont smallflex normalmarginleft'>Card Number</div>
+          <input type='text' class='smallmarginleft normalfont mediumflex normalmarginright' id='profile-card-number' name='card-number' value=1234>
+        </div>
       </div>
       <div class='spacebetweencontainer'>
         <a href='<?php eu('profile');?>'>
