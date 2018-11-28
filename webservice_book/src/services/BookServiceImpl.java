@@ -248,10 +248,9 @@ public class BookServiceImpl implements BookService {
 //            price = result.getDouble("price");
 //        }
 //        price *= n;
-        String url = "http://localhost:8082/api/bank/transfer";
         String senderCard = "16824";
         String receiverCard = "17436";
-        HttpConnect.sendPost(url, senderCard, receiverCard, 1000);
+        HttpConnect.sendPost(senderCard, receiverCard, 1000);
         return true;
     }
     
