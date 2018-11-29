@@ -76,22 +76,13 @@ public class BookServiceImpl implements BookService {
                     }
                 } else categories[0] = "-";
 
-                //get saleability and price
-                boolean saleability;
+                //get price
                 Double price;
                 String for_sale = books.getJSONObject(i).getJSONObject("saleInfo").getString("saleability");
-                if (for_sale.equals("NOT_FOR_SALE")) {
-                    saleability = false;
-                    price= 0.0;
-                } else {
-                    saleability = true;
+                if (!books.getJSONObject(i).getJSONObject("saleInfo").isNull("listPrice")) {
                     price = books.getJSONObject(i).getJSONObject("saleInfo").getJSONObject("listPrice").getDouble("amount");
-                }
-
-                //get rating
-                float rating=0;
-                if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("averageRating")) {
-                    rating=books.getJSONObject(i).getJSONObject("volumeInfo").getFloat("averageRating");
+                } else {
+                    price=0.0;
                 }
 
                 //create new book
@@ -103,8 +94,6 @@ public class BookServiceImpl implements BookService {
                 a_book.setDescription(description);
                 a_book.setCategories(categories);
                 a_book.setPrice(price);
-                a_book.setSaleability(saleability);
-                a_book.setRating(rating);
 
                 array_book[i] = a_book;
             }
@@ -118,108 +107,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book detailBook(String id) throws IOException {
-        Book detailBook = new Book();
-        String getURL = "https://www.googleapis.com/books/v1/volumes/" + id + "?";
-        URL url = new URL(getURL);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        int responseCode = getConnection(con);
-        System.out.println("GET Response Code :: " + responseCode);
-        if(responseCode == HttpURLConnection.HTTP_OK) {
-            // convert response into json
-            JSONObject json = toJSON(con);
-            JSONObject volInfo = json.getJSONObject("volumeInfo");
-            JSONObject saleInfo = json.getJSONObject("saleInfo");
-            // containers
-            String title;
-            String[] authors = new String[1];
-            String cover;
-            String description;
-            String[] categories = new String[1];
-            boolean saleability;
-            double price;
-            float rating;
-
-
-            // get title
-            if(!volInfo.isNull("title")) {
-                title = volInfo.getString("title");
-            } else {
-                title = "-";
-            }
-
-            // get authors
-            if(!volInfo.isNull("authors")) {
-                JSONArray arrAuthor = volInfo.getJSONArray("authors");
-                authors = new String[arrAuthor.length()];
-                int i = 0;
-                for(Object author : arrAuthor) {
-                    authors[i] = author.toString();
-                    i++;
-                }
-            } else {
-                authors = new String[1];
-                authors[0] = "-";
-            }
-
-            // get cover
-            if(!volInfo.isNull("imageLinks")) {
-                cover = volInfo.getJSONObject("imageLinks").getString("smallThumbnail");
-            } else {
-                cover = "-";
-            }
-
-            // get description
-            if(!volInfo.isNull("description")) {
-                description = volInfo.getString("description");
-            } else {
-                description = "-";
-            }
-
-            // get categories
-            if(!volInfo.isNull("categories")) {
-                JSONArray arrCategories = volInfo.getJSONArray("categories");
-                categories = new String[arrCategories.length()];
-                int i = 0;
-                for(Object category : arrCategories) {
-                    categories[i] = category.toString();
-                    i++;
-                }
-            } else {
-                categories = new String[1];
-                categories[0] = "-";
-            }
-
-            // get saleability
-            if(saleInfo.getString("saleability").equals("FOR_SALE")) {
-                price = saleInfo.getJSONObject("listPrice").getDouble("amount");
-                saleability = true;
-            } else {
-                price = 0.0;
-                saleability = false;
-            }
-
-            // get average ratings
-            if(!volInfo.isNull("averageRating")) {
-                rating = volInfo.getFloat("averageRating");
-            } else {
-                rating = 0;
-            }
-
-            //create new book
-            detailBook.setIdBook(id);
-            detailBook.setAuthors(authors);
-            detailBook.setCategories(categories);
-            detailBook.setCover(cover);
-            detailBook.setDescription(description);
-            detailBook.setPrice(price);
-            detailBook.setRating(rating);
-            detailBook.setSaleability(saleability);
-            detailBook.setTitle(title);
-
-        } else {
-            System.out.println("GET request not worked");
-        }
-        return detailBook;
+        Book book = new Book();
+        return book;
     }
 
     @Override
