@@ -52,7 +52,7 @@ function validateCard(inputId, requestKey, checkmarkId){
   xhr.onreadystatechange = function () {
     if(this.readyState == 4 || this.status == 200) {
       response = JSON.parse(this.responseText);
-      console.log(response);
+      console.log(this.responseText);
       if(response.message == 'Authentication successful') {
         showCheckmark('cardnumbercheck', 1);
       } else{
@@ -161,7 +161,6 @@ document.getElementById('profile-address').onblur = redAddress;
 document.getElementById('profile-phone').onblur = redPhone;
 document.getElementById('profile-card-number').onblur = function () {
   if (!redCardNumber()){
-    console.log('WTF');
     validateCard('profile-card-number','cardNumber','cardnumbercheck');
   } else
     showCheckmark('cardnumbercheck', 0);

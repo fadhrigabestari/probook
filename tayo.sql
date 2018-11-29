@@ -11,6 +11,7 @@ create table if not exists Users (
   email varchar(50) not null,
   address varchar(140) not null,
   phone varchar(12) not null,
+  cardNumber int not null,
   picture varchar(64) default '04a924e79f3653cc41556d71550a07fb.png',
   unique key (username),
   primary key (idUser)
