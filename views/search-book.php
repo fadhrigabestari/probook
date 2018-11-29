@@ -13,7 +13,7 @@
           <br>
           <input type='submit' id='submitbt' value='Search'>
         </form>
-
+        <p> {{control.bookTitle}}</p>
         <div class="lds-facebook" style="display:none" id="loader"><div></div><div></div><div></div></div>
 
         <!-- result -->
@@ -35,7 +35,7 @@
                         <div class='bookscore'>
                           <span class='bookauthor' id='bookauthor'>{{book.authors}}</span>
                           <span>&nbsp;-&nbsp;</span>
-                          
+
                           <span class='bookrating'>belommmmmmmm</span>
                           <span>/5.0 (</span>
                           <span class='bookvotecount'>belommmmm</span>
@@ -46,7 +46,7 @@
               </div>
               <a href='<?php eu('detail', '{{book.idBook}}');?>'>
                 <button class='detail'>Detail</button>
-              </a>    
+              </a>
             </div>
         </div>
     <script type='text/javascript' src='<?php es('js/search-book.js');?>'></script>

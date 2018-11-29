@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
             JSONObject json = toJSON(con);
             JSONArray books = json.getJSONArray("items");
             int count_books = books.length();
-            array_book = new Book[count_books+1];
+            array_book = new Book[count_books];
 
             for (int i=0; i<count_books; i++) {
 
@@ -197,6 +197,7 @@ public class BookServiceImpl implements BookService {
             System.out.println("GET request not worked");
         }
 
+        SQLConnect.closeConnection();
         return array_book;
     }
 
@@ -261,13 +262,14 @@ public class BookServiceImpl implements BookService {
         book.setAuthors(authors);
         book.setCategories(authors);
 
+        SQLConnect.closeConnection();
         return book;
     }
 
     @Override
     public boolean buyBook(String id, int n, String account_number) throws Exception{
         String senderCard = account_number;
-        String receiverCard = "123412341234";
+        String receiverCard = "0";
         SQLConnect.getConnection();
         String query;
         ResultSet rs;
@@ -283,8 +285,10 @@ public class BookServiceImpl implements BookService {
         }
         price *= n;
 
-        HttpConnect.sendPost(senderCard, receiverCard, price);
-        return true;
+        boolean answer = HttpConnect.sendPost(senderCard, receiverCard, price);
+        SQLConnect.closeConnection();
+
+        return answer;
     }
 
     @Override
