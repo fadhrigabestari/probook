@@ -11,15 +11,14 @@ $db_conn->beginTransaction();
 
 if (isset($content['username'])) {
     $res['username'] = check_username($content['username']);
+    $res['content'] = $content['username'];
 }
 
 if (isset($content['email'])) {
     $res['email'] = check_email($content['email']);
+    $res['content'] = $content['email'];
 }
 
-if (isset($content['card-number'])) {
-    $res['card-number'] = check_cardNumber($content['card-number']);
-}
 
 $db_conn->commit();
 

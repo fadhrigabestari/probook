@@ -4,7 +4,7 @@ exports.newCustomer = function(req, res) {
     const reqCard = req.body.cardNumber;
     const mysqlQuery = 'select idCustomer from customers where cardNumber = ?';
 
-    connection.query(mysqlQuery, reqCard, function(errdb, resdb) {
+    connection.query(mysqlQuery, [reqCard], function(errdb, resdb) {
       if(errdb) {
         res.status(401).json({message: 'Authentication failed'});
         return;

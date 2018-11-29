@@ -21,8 +21,6 @@ try {
     throw new Exception('username unavailable');
   if (!check_email($email))
     throw new Exception('email unavailable');
-  if (!check_cardNumber($card_number))
-    throw new Exception('card number unavailable');
 
   $stmt = $db_conn->prepare('insert into Users (name, username, password, email, address, phone)
     values(?, ?, ?, ?, ?, ?)');

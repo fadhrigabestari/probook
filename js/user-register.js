@@ -32,28 +32,36 @@ function checkUnique(inputId, requestKey, checkmarkId) {
   xhr.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200) {
       response = JSON.parse(this.responseText);
+      console.log('KEY');
+      console.log(response[requestKey]);
+      console.log(requestKey);
       showCheckmark(checkmarkId, response[requestKey] ? 1 : -1);
     }
   };
   xhr.send(content);
 }
 
-// function validateCard(inputId, requestKey, checkmarkId){
-//   input = document.getElementById(inputId).value;
-//   xhr = new XMLHttpRequest();
-//   obj = {};
-//   obj[requestKey] = input;
-//   content = JSON.stringify(obj);
-//   xhr.open('GET', 'http://localhost:8081/api/customer');
-//   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-//   xhr.onreadystatechange = function () {
-//     if(this.readyState == 4 && this.status == 200) {
-//       response = JSON.parse(this.responseText);
-//       showCheckmark(checkmarkId, response[requestKey] ? 1 : -1);
-//     }
-//   };
-//   xhr.send(content);
-// }
+function validateCard(inputId, requestKey, checkmarkId){
+  input = document.getElementById(inputId).value;
+  xhr = new XMLHttpRequest();
+  obj = {};
+  obj[requestKey] = input;
+  content = JSON.stringify(obj);
+  xhr.open('POST', 'http://localhost:8081/api/bank/customer');
+  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  xhr.onreadystatechange = function () {
+    if(this.readyState == 4 || this.status == 200) {
+      response = JSON.parse(this.responseText);
+      console.log(response);
+      if(response.message == 'Authentication successful') {
+        showCheckmark('cardnumbercheck', 1);
+      } else{
+        showCheckmark('cardnumbercheck', -1);
+      }
+    }
+  };
+  xhr.send(content);
+}
 
 function validateName() {
   name = document.getElementById('profile-name').value;
@@ -152,9 +160,10 @@ document.getElementById('profile-confirm-password').onblur = redConfirmPassword;
 document.getElementById('profile-address').onblur = redAddress;
 document.getElementById('profile-phone').onblur = redPhone;
 document.getElementById('profile-card-number').onblur = function () {
-  if (!redCardNumber())
-    checkUnique('profile-card-number', 'card-number', 'cardnumbercheck');
-  else
+  if (!redCardNumber()){
+    console.log('WTF');
+    validateCard('profile-card-number','cardNumber','cardnumbercheck');
+  } else
     showCheckmark('cardnumbercheck', 0);
 };
 

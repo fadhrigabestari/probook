@@ -40,7 +40,7 @@
                         </div>
                         <div class='rowcontainer flexstart mediummarginleft smallmargintop '>
                             <div class='mediumfont largeflex textalignright'>Card Number</div>
-                            <input placeholder="Input card number" class='smallmarginleft mediumfont mediumflex' id='profile-card-number' name='card-number'>
+                            <input placeholder="Input card number" class='smallmarginleft mediumfont mediumflex' id='profile-card-number' name='cardNumber'>
                             <img class='checkmark marginright verysmallmarginleft' id='cardnumbercheck' src='<?php es('img/clear.png');?>'>
                         </div>
                         <div class='rowcontainer mediummarginleft smallmargintop mediumfont largeflex '>
