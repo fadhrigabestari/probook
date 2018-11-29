@@ -15,11 +15,21 @@ function removeErrPopUp() {
   document.getElementById('orderbackdrop').classList.add('hiddencontent');
 };
 function addOrder(orderurl) {
-  http = new XMLHttpRequest();
-  http.open('POST', orderurl, true)
+  httpphp = new XMLHttpRequest();
+  httpphp.open('POST', orderurl);
+
+  contentphp = JSON.stringify({
+    'idBook': document.getElementById("idBook").value,
+    'quantity': document.getElementById("norder").value
+  });
+
+  httpphp.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+
+  httpsoap = new XMLHttpRequest();
+  httpsoap.open('POST', 'http://localhost:8081/api/books', true)
 
   // build SOAP request
-  content =
+  contentsoap =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services/">' +
     '<soapenv:Header/>' +
     '<soapenv:Body>' +
@@ -31,8 +41,8 @@ function addOrder(orderurl) {
     '</soapenv:Body>' +
   '</soapenv:Envelope>' +
   });
-  
-  http.onreadystatechange = function () {
+
+  httpsoap.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
       responsemsg = JSON.parse(this.responseText);
       document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];

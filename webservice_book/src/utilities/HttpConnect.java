@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class HttpConnect {
 
     // HTTP POST request
-    public static void sendPost(String senderCard, String receiverCard, int amount) throws Exception {
+    public static void sendPost(String senderCard, String receiverCard, double amount) throws Exception {
         String request = "http://localhost:8082/api/bank/transfer";
         String urlParameters = "senderCard=" + senderCard +
                 "&receiverCard=" + receiverCard +

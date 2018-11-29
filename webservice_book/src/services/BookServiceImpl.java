@@ -175,9 +175,25 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean buyBook(String id, int n, String account_number) throws Exception{
-        String senderCard = "16824";
-        String receiverCard = "17436";
-        HttpConnect.sendPost(senderCard, receiverCard, 1000);
+        String senderCard = account_number;
+        String receiverCard = "123412341234";
+        SQLConnect.getConnection();
+        String query;
+        ResultSet rs;
+        double price = 0.0;
+
+        query = "select price from books where idBook = ?";
+        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+        SQLConnect.stmt.setString(1, id);
+        System.out.println(SQLConnect.stmt);
+        rs = SQLConnect.stmt.executeQuery();
+
+        while(rs.next()) {
+            price = rs.getDouble("price");
+        }
+        price *= n;
+
+        HttpConnect.sendPost(senderCard, receiverCard, price);
         return true;
     }
 
