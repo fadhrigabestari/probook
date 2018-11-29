@@ -27,8 +27,12 @@ import static utilities.BookServiceUtil.toJSON;
 @WebService(endpointInterface = "services.BookService")
 public class BookServiceImpl implements BookService {
     @Override
-    public Book[] searchBook(String title_input) throws IOException {
+    public Book[] searchBook(String title_input) throws Exception {
+        SQLConnect.getConnection();
+        String query;
+        ResultSet rs;
         Book[] array_book = new Book[1];
+
         title_input = title_input.replace(' ', '+');
         String get_url = "https://www.googleapis.com/books/v1/volumes?q=" + title_input;
         System.out.println(get_url);
@@ -99,6 +103,60 @@ public class BookServiceImpl implements BookService {
                 a_book.setPrice(price);
 
                 array_book[i] = a_book;
+                query = "insert into books (idBook, price, title, cover, description) values (?,?,?,?,?)";
+                SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+                SQLConnect.stmt.setString(1, idBook);
+                SQLConnect.stmt.setString(2, Double.toString(price));
+                SQLConnect.stmt.setString(3,title);
+                SQLConnect.stmt.setString(4,cover);
+                SQLConnect.stmt.setString(5,description);
+                SQLConnect.stmt.executeQuery();
+
+                //insert category to database
+                for (int j=0; j< categories.length; j++) {
+                    query = "if not exists (select * from categorynames where name = ?) insert into categorynames (name) values (?)";
+                    SQLConnect.stmt.setString(1,categories[j]);
+                    SQLConnect.stmt.setString(2,categories[j]);
+                    SQLConnect.stmt.executeQuery();
+                }
+
+                //insert author to database
+                for (int j=0; j< authors.length; j++) {
+                    query = "if not exists (select * from authornames where name = ?) insert into authornames (name) values (?)";
+                    SQLConnect.stmt.setString(1,authors[j]);
+                    SQLConnect.stmt.setString(2,authors[j]);
+                    SQLConnect.stmt.executeQuery();
+                }
+
+                //insert relation book - category (multivalues)
+                    for (int j=0; j< categories.length; j++) {
+                        query = "select idCategory from categorynames where name = ?";
+                        SQLConnect.stmt.setString(1, categories[j]);
+                        rs = SQLConnect.stmt.executeQuery();
+                        int idCategory=0;
+                        while(rs.next()) {
+                            idCategory = rs.getInt("idCategory");
+                        }
+                        query = "insert into bookcategories values (?,?)";
+                        SQLConnect.stmt.setString(1, idBook);
+                        SQLConnect.stmt.setString(1, String.valueOf(idCategory));
+                    }
+
+                //insert relation book - author (multivalues)
+                    for (int j=0; j< authors.length; j++) {
+                        query = "select idAuthor from authornames where name = ?";
+                        SQLConnect.stmt.setString(1, authors[j]);
+                        rs = SQLConnect.stmt.executeQuery();
+                        int idAuthor=0;
+                        while(rs.next()) {
+                            idAuthor= rs.getInt("idAuthor");
+                        }
+                        query = "insert into bookauthors values (?,?)";
+                        SQLConnect.stmt.setString(1, idBook);
+                        SQLConnect.stmt.setString(1, String.valueOf(idAuthor));
+                    }
+                
+         
             }
 
         } else {
