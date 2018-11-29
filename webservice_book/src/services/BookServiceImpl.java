@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
             JSONObject json = toJSON(con);
             JSONArray books = json.getJSONArray("items");
             int count_books = books.length();
-            array_book = new Book[count_books+1];
+            array_book = new Book[count_books];
 
             for (int i=0; i<count_books; i++) {
 
@@ -68,28 +68,6 @@ public class BookServiceImpl implements BookService {
                 if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("imageLinks")) 
                     cover = books.getJSONObject(i).getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("smallThumbnail");
 
-                //get categories
-                String[] categories = new String[1];
-                if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("categories")) {
-                    JSONArray categories_array = books.getJSONObject(i).getJSONObject("volumeInfo").getJSONArray("categories");
-                    categories = new String[categories_array.length()];
-                    for (int j=0; j< categories_array.length(); j++) {
-                        categories[j] = categories_array.getString(j);
-                    }
-                } else categories[0] = "-";
-                
-                //get saleability and price
-                boolean saleability;
-                double price;
-                String for_sale = books.getJSONObject(i).getJSONObject("saleInfo").getString("saleability");
-                if (for_sale.equals("NOT_FOR_SALE")) {
-                    saleability = false;
-                    price= 0.0;
-                } else {
-                    saleability = true;
-                    price = books.getJSONObject(i).getJSONObject("saleInfo").getJSONObject("listPrice").getDouble("amount");
-                }
-
                 //get rating
                 float rating=0;
                 if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("averageRating")) {
@@ -108,9 +86,6 @@ public class BookServiceImpl implements BookService {
                 a_book.setAuthors(authors);
                 a_book.setCover(cover);
                 a_book.setDescription(description);
-                a_book.setCategories(categories);
-                a_book.setPrice(price);
-                a_book.setSaleability(saleability);
                 a_book.setRating(rating);
                 a_book.setRatingsCount(ratingsCount);
 
@@ -255,7 +230,49 @@ public class BookServiceImpl implements BookService {
     }
     
     @Override
-    public String recommendBook(String category) {
+    public Book[] recommendBook(String[] category) {
+        //Kategori buku yang dimasukkan boleh lebih dari 1. Buku yang direkomendasikan adalah 
+        //buku yang memiliki jumlah pembelian total terbanyak yang memiliki kategori yang sama
+        //dengan daftar kategori yang menjadi input. Data tersebut didapat dari service yang
+        //mencatat jumlah pembelian.
+        //Jika buku dengan kategori tersebut belum ada yang terjual, maka webservice akan mengembalikan
+        //1 buku random dari hasil pencarian pada Google Books API. Pencarian yang dilakukan adalah buku 
+        //yang memiliki kategori yang sama dengan salah satu dari kategori yang diberikan (random).
+  
+        Book[] array_book = new Book[1];
+        int category_count = category.length();
+
+        // for (int i=0; i<category_count, i++) {
+        //     String category_search = category[i].replace(' ', '+');
+
+        //     //MASIH BINGUNG LINKNYA BENER GINI APA NGGA BUAT NYARI CATEGORY
+        //     String get_url = "https://www.googleapis.com/books/v1/volumes?q=subject:" + category_search;
+        // }
+        // Book[] array_book = new Book[1];
+        // title_input = title_input.replace(' ', '+');
+        // String get_url = "https://www.googleapis.com/books/v1/volumes?q=" + title_input;
+        // System.out.println(get_url);
+        // URL url = new URL(get_url);
+        // HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        // int responseCode = getConnection(con);
+        // if (responseCode == HttpURLConnection.HTTP_OK) { 
+        //     // success
+        //     JSONObject json = toJSON(con);
+        //     JSONArray books = json.getJSONArray("items");
+        //     int count_books = books.length();
+        //     array_book = new Book[count_books+1];
+
+        //     for (int i=0; i<count_books; i++) {
+
+        //         //get title
+        //         String title = books.getJSONObject(i).getJSONObject("volumeInfo").getString("title");
+        //         String idBook = books.getJSONObject(i).getString("id");
+
+        //         //get description
+        //         String description="-";
+        //         if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("description")) 
+        //             description = books.getJSONObject(i).getJSONObject("volumeInfo").getString("description");
+                
         return "test";
     }
 }
