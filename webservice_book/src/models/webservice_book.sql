@@ -8,7 +8,7 @@ create table if not exists Books (
   idBook varchar(70) not null,
   price int not null,
   title varchar(70) not null,
-  cover varchar(64) default null,
+  cover varchar(255) default null,
   description text,
   primary key (idBook)
 ) engine=InnoDB default charset=utf8mb4;
