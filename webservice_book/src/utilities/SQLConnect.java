@@ -1,27 +1,18 @@
 package utilities;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class SQLConnect {
-    static String driver = "com.mysql.jdbc.Driver";
-    static String database = "jdbc:mysql://localhost:3307/probook";
-    static String user = "root";
-    static String password = "haruka3798";
-
-    static Connection connection;
+    public static Connection connection;
+    public static PreparedStatement stmt;
 
     public static void getConnection() throws ClassNotFoundException, SQLException {
+        String driver = Config.driver;
+        String database = Config.database;
+        String user = Config.user;
+        String password = Config.password;
         Class.forName(driver);
         connection = DriverManager.getConnection(database,user,password);
-    }
-
-    public static ResultSet execQuery(String query) throws SQLException {
-        Statement stmt = connection.createStatement();
-        return stmt.executeQuery(query);
     }
 
     public static void closeConnection() throws SQLException {

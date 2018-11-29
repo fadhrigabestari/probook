@@ -3,6 +3,8 @@ package services;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Set;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import models.Book;
 import utilities.BookServiceUtil;
 import utilities.HttpConnect;
+import utilities.SQLConnect;
 
 import static utilities.BookServiceUtil.getConnection;
 import static utilities.BookServiceUtil.toJSON;
@@ -46,7 +49,7 @@ public class BookServiceImpl implements BookService {
                 String idBook = books.getJSONObject(i).getString("id");
 
                 //get description
-                String description="-";
+                String description="No description";
                 if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("description"))
                     description = books.getJSONObject(i).getJSONObject("volumeInfo").getString("description");
 
@@ -58,11 +61,11 @@ public class BookServiceImpl implements BookService {
                     for (int j=0; j< authors_array.length(); j++) {
                         authors[j] = authors_array.getString(j);
                     }
-                } else authors[0] = "-";
+                } else authors[0] = "Anonymous";
 
 
                 //get cover
-                String cover="-";
+                String cover="https://d3525k1ryd2155.cloudfront.net/i/en/n/no-image-new.png";
                 if (!books.getJSONObject(i).getJSONObject("volumeInfo").isNull("imageLinks"))
                     cover = books.getJSONObject(i).getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("smallThumbnail");
 
@@ -106,8 +109,67 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book detailBook(String id) throws IOException {
+    public Book detailBook(String id) throws Exception {
         Book book = new Book();
+        SQLConnect.getConnection();
+        String query;
+        ResultSet rs;
+        int rowCount;
+        int i;
+
+        query = "select * from books where idBook = ?";
+        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+        SQLConnect.stmt.setString(1, id);
+        System.out.println(SQLConnect.stmt);
+        rs = SQLConnect.stmt.executeQuery();
+
+        while(rs.next()) {
+            book.setIdBook(rs.getString("idBook"));
+            book.setTitle(rs.getString("title"));
+            book.setCover(rs.getString("cover"));
+            book.setDescription(rs.getString("description"));
+        }
+
+        query = "select name from authornames natural join bookauthors where idBook = ?";
+        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+        SQLConnect.stmt.setString(1, id);
+        rs = SQLConnect.stmt.executeQuery();
+
+        rowCount = 0;
+        if(rs.last()) {
+            rowCount = rs.getRow();
+            rs.beforeFirst();
+        }
+
+        String[] authors = new String[rowCount];
+        i = 0;
+
+        while(rs.next()) {
+            authors[i] = rs.getString("name");
+            i++;
+        }
+
+        query = "select name from categorynames natural join bookcategories where idBook = ?";
+        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+        SQLConnect.stmt.setString(1, id);
+        rs = SQLConnect.stmt.executeQuery();
+
+        rowCount = 0;
+        if(rs.last()) {
+            rowCount = rs.getRow();
+            rs.beforeFirst();
+        }
+
+        String[] categories = new String[rowCount];
+        i = 0;
+
+        while(rs.next()) {
+            authors[i] = rs.getString("name");
+            i++;
+        }
+        book.setAuthors(authors);
+        book.setCategories(authors);
+
         return book;
     }
 
