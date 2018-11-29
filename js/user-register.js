@@ -38,6 +38,23 @@ function checkUnique(inputId, requestKey, checkmarkId) {
   xhr.send(content);
 }
 
+// function validateCard(inputId, requestKey, checkmarkId){
+//   input = document.getElementById(inputId).value;
+//   xhr = new XMLHttpRequest();
+//   obj = {};
+//   obj[requestKey] = input;
+//   content = JSON.stringify(obj);
+//   xhr.open('GET', 'http://localhost:8081/api/customer');
+//   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+//   xhr.onreadystatechange = function () {
+//     if(this.readyState == 4 && this.status == 200) {
+//       response = JSON.parse(this.responseText);
+//       showCheckmark(checkmarkId, response[requestKey] ? 1 : -1);
+//     }
+//   };
+//   xhr.send(content);
+// }
+
 function validateName() {
   name = document.getElementById('profile-name').value;
   return (name.length > 0 && name.length <= 50);
