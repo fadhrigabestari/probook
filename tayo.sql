@@ -1,3 +1,8 @@
+drop table if exists Reviews;
+drop table if exists Transactions;
+drop table if exists Books;
+drop table if exists Users;
+
 create table if not exists Users (
   idUser int not null auto_increment,
   username varchar(20) not null,
@@ -13,10 +18,6 @@ create table if not exists Users (
 
 create table if not exists Books (
   idBook int not null auto_increment,
-  title varchar(70) not null,
-  author varchar(70) not null,
-  cover varchar(64) default null,
-  description text,
   primary key (idBook)
 ) engine=InnoDB default charset=utf8mb4;
 
