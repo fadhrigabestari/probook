@@ -13,7 +13,6 @@
           <br>
           <input type='submit' id='submitbt' value='Search'>
         </form>
-        <p> {{control.bookTitle}}</p>
         <div class="lds-facebook" style="display:none" id="loader"><div></div><div></div><div></div></div>
 
         <!-- result -->
