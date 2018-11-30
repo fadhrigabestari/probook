@@ -51,10 +51,17 @@ try {
       }
       $avgrating = $sumrating / count($reviews);
     }
+
+    try {
+        $recommend = $soap->recommendBook($book->categories);
+    } catch(Exception $e) {
+        die($e->getMessage());
+    }
   }
 }
 catch(Exception $e) {
   die($e->getMessage());
 }
+
 
 require 'views/book-detail.php';

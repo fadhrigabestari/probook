@@ -104,8 +104,26 @@
           </div>
         </div>
   <?php } ?>
+       </div>
+       <h2 class='h2heading'>Recommendation</h2>
+       <div class='bookdetail'>
+              <div class='bookimgreview'>
+                  <img class='image' src='<?php e($recommend->item[0]->cover);?>'>
+              </div>
+         <div class='book'>
+            <div class='bookname' id='bookname'> <?php e($recommend->item[0]->title);?></div>
+            <div class='bookscore'>
+              <span class='bookauthor' id='bookauthor'><?php e($recommend->item[0]->authors);?></span>
+              <span>&nbsp;-&nbsp;</span>
+              <span class='bookrating'><?php e($recommend->item[0]->rating);?></span>
+              <span>/5.0 (</span>
+              <span class='bookvotecount'><?php e($recommend->item[0]->ratingCount);?></span>
+              <span>&nbsp;votes)</span>
+            </div>
+            <div class='bookdesc' id='bookdesc'><?php e($recommend->item[0]->description);?></div>
+        </div>
+        </div>
       </div>
-    </div>
     <script type='text/javascript' src='<?php es('js/book-detail.js');?>'></script>
   </body>
 </html>
