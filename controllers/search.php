@@ -8,40 +8,27 @@ ini_set('default_socket_timeout', 15);
 if (!isset($_REQUEST['search'])) {
     require 'views/search-book.php';
 } else {
-    // global $db_conn;
-    // $query = $_REQUEST['search'];
-    // $stmt = $db_conn->prepare('
-    //     select
-    //         Books.idBook, title, author, cover, description, avg(rating) as rating,
-    //         count(Reviews.idTransaction) as reviewCount
-    //     from Books
-    //     left outer join Transactions on Books.idbook = Transactions.idBook
-    //     left outer join Reviews on Transactions.idTransaction = Reviews.idTransaction
-    //     where title like ? group by Books.idBook');
-    // $stmt->execute(["%$query%"]);
-    // $results = $stmt->fetchAll();
+  //web service
+  global $db_conn;
+  $wsdl = 'http://localhost:8081/api/books?wsdl';
+  $soap = new SoapClient($wsdl);
+  $results = $soap->searchBook($_REQUEST['search']);
 
-    $wsdl = 'http://localhost:8081/api/books?WSDL';
+  for ($i = 0; $i < sizeof($results->item); $i++) {
+      $book_id = $results->item[$i]->idBook;
+      $stmt = $db_conn->prepare('select idTransaction, avg(rating), count(idTransaction) from transactions natural join reviews where idBook = ? group by ?');
+      $stmt->execute([$book_id, $book_id]);
+      $ratings = $stmt->fetchAll();
+       if(count($ratings) !== 0) {
+          $results->item[$i]->rating = $ratings['avg(rating)'];
+          $results->item[$i]->ratingCount = $rating['count(idTransaction)'];  
+       }
+      
+  }
+  
+    
+ 
 
-    $options = array(
-  		'uri'=>'http://schemas.xmlsoap.org/soap/envelope/',
-  		'style'=>SOAP_RPC,
-  		'use'=>SOAP_ENCODED,
-  		'soap_version'=>SOAP_1_1,
-  		'cache_wsdl'=>WSDL_CACHE_NONE,
-  		'connection_timeout'=>15,
-  		'trace'=>true,
-  		'encoding'=>'UTF-8',
-  		'exceptions'=>true,
-  	);
-    try {
-  	   $soap = new SoapClient($wsdl, $options);
-  	   $results = $soap->searchBook($_REQUEST['search']);
-       $results = $results->item;
-    }
-    catch(Exception $e) {
-  	   die($e->getMessage());
-    }
-
-    require 'views/search-result.php';
+  $result = json_encode($results);
+  echo($result);
 }

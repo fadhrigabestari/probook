@@ -16,32 +16,26 @@ function removeErrPopUp() {
 };
 function addOrder(orderurl) {
   http = new XMLHttpRequest();
-  http.open('POST', orderurl, true)
-
-  // build SOAP request
-  content =
-  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services/">' +
-    '<soapenv:Header/>' +
-    '<soapenv:Body>' +
-      '<ser:buyBook>' +
-        '<arg0>' + idBook + '</arg0>' +
-        '<arg1>' + quantity + '</arg1>' +
-        '<arg2>' + senderCard + '</arg2>' +
-      '</ser:buyBook>' +
-    '</soapenv:Body>' +
-  '</soapenv:Envelope>' +
+  content = JSON.stringify({
+    'idBook': document.getElementById("idBook").value,
+    'quantity': document.getElementById("norder").value
   });
-  
+
+  http.open('POST', orderurl)
+  http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   http.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       responsemsg = JSON.parse(this.responseText);
-      document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];
-      addPopUp();
+      if(responsemsg['code'] == 200) {
+        document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];
+        addPopUp();
+      } else {
+        addErrPopUp();
+      }
     } else if(this.status != 200) {
       addErrPopUp();
     }
   }
-
-  http.setRequestHeader('Content-type', 'text/xml');
   http.send(content);
 }

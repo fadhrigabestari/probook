@@ -52,7 +52,7 @@
           </div>
           <div class='bookstar'>
   <?php     for ($i = 1; $i <= 5; $i++) {
-              if ($book->rating >= $i) { ?>
+              if ($avgrating >= $i) { ?>
             <img class='star' src='<?php es('img/filledstar.png');?>'>
   <?php       } else { ?>
             <img class='star' src='<?php es('img/emptystar.png');?>'>
@@ -60,7 +60,7 @@
             }
   ?>
           </div>
-          <div class='bookrating'><?php e(number_format($book->rating,1));?>&nbsp;/ 5.0</div>
+          <div class='bookrating'><?php e(number_format($avgrating,1));?>&nbsp;/ 5.0</div>
         </div>
       </div>
       <div>
@@ -81,11 +81,11 @@
           </select>
           </div>
           <input type='hidden' id='idBook' value='<?php e($book->idBook);?>'>
-          <?php $orderurl = e('http://localhost:8081/api/books'));?>
+          <?php $orderurl = json_encode(make_url('order'), JSON_HEX_TAG|JSON_HEX_AMP);?>
           <button class='order' onclick="addOrder(<?php e($orderurl);?>)">Order</button>
         </div>
       </div>
-      <!-- <div class='review'>
+      <div class='review'>
         <h2 class='h2heading'>Reviews</h2>
   <?php foreach ($reviews as $review) { ?>
         <div class='reviewcontent'>
@@ -99,7 +99,7 @@
             <div class='rating'><?php e(number_format($review['rating'],1));?>&nbsp;/ 5.0</div>
           </div>
         </div>
-  <?php } ?> -->
+  <?php } ?>
       </div>
     </div>
     <script type='text/javascript' src='<?php es('js/book-detail.js');?>'></script>

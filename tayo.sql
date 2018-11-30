@@ -1,7 +1,10 @@
 drop table if exists Reviews;
 drop table if exists Transactions;
+drop table if exists BookCategories;
+drop table if exists categoryNames;
 drop table if exists Books;
 drop table if exists Users;
+
 
 create table if not exists Users (
   idUser int not null auto_increment,
@@ -18,13 +21,31 @@ create table if not exists Users (
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists Books (
-  idBook int not null auto_increment,
+  idBook varchar(100) not null,
   primary key (idBook)
+) engine=InnoDB default charset=utf8mb4;
+
+create table if not exists CategoryNames (
+  idCategory int not null auto_increment,
+  name varchar(255) not null,
+  primary key (idCategory)
+) engine=InnoDB default charset=utf8mb4;
+
+create table if not exists BookCategories (
+  idBook varchar(100) not null,
+  idCategory int not null,
+  primary key (idBook, idCategory),
+  foreign key (idBook)
+      references Books(idBook)
+      on delete cascade on update cascade,
+    foreign key (idCategory)
+      references CategoryNames(idCategory)
+      on delete cascade on update cascade
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists Transactions (
   idTransaction int not null auto_increment,
-  idBook int not null,
+  idBook varchar(100) not null,
   idUser int not null,
   orderDate date not null,
   quantity int not null,

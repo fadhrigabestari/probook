@@ -5,22 +5,22 @@ DROP TABLE if exists authorNames;
 DROP TABLE if exists Books;
 
 create table if not exists Books (
-  idBook int not null auto_increment,
-  price int not null,
-  title varchar(70) not null,
-  cover varchar(64) default null,
+  idBook varchar(100) not null,
+  price double not null,
+  title varchar(255) not null,
+  cover varchar(255) default null,
   description text,
   primary key (idBook)
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists authorNames (
 	idAuthor int not null auto_increment,
-	name varchar(70) not null,
+	name varchar(255) not null,
 	primary key (idAuthor)
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists BookAuthors (
-	idBook int not null,
+	idBook varchar(100) not null,
 	idAuthor int not null,
 	primary key (idAuthor, idBook),
 	foreign key (idBook)
@@ -33,12 +33,12 @@ create table if not exists BookAuthors (
 
 create table if not exists CategoryNames (
 	idCategory int not null auto_increment,
-	name varchar(70) not null,
+	name varchar(255) not null,
 	primary key (idCategory)
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists BookCategories (
-	idBook int not null,
+	idBook varchar(100) not null,
 	idCategory int not null,
 	primary key (idBook, idCategory),
 	foreign key (idBook)

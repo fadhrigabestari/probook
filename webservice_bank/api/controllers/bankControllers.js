@@ -27,6 +27,7 @@ exports.transfer = async function(req, res) {
   const balanceQuery = 'select balance from customers where cardNumber = ?';
   const subtractQuery = 'update customers set balance = balance - ? where cardNumber = ?';
   const addQuery = 'update customers set balance = balance + ? where cardNumber = ?';
+  const insertQuery = 'insert into transactions(senderCardNumber, receiverCardNumber, amount) values(?,?,?)'
 
   connection.query(cardQuery, senderCard, function(errdb, resdb) {
     if(errdb) {
@@ -56,26 +57,33 @@ exports.transfer = async function(req, res) {
           return;
         }
 
-        if(parseInt(resdb.balance) < parseInt(amount)) {
+        if(parseInt(resdb[0].balance) < parseInt(amount)) {
           res.status(400).json({message: 'Transfer failed, insufficient balance'});
           return;
-        }
-
-        connection.query(subtractQuery, [amount, senderCard], function(errdb, resdb) {
-          if(errdb) {
-            res.status(400).json({message: 'Transfer failed'});
-            return;
-          }
-
-          connection.query(addQuery, [amount, receiverCard], function(errdb, resdb) {
+        } else {
+          connection.query(subtractQuery, [amount, senderCard], function(errdb, resdb) {
             if(errdb) {
               res.status(400).json({message: 'Transfer failed'});
               return;
             }
 
-            res.status(200).json({message: 'Transfer successful'});
+            connection.query(addQuery, [amount, receiverCard], function(errdb, resdb) {
+              if(errdb) {
+                res.status(400).json({message: 'Transfer failed'});
+                return;
+              }
+
+              connection.query(insertQuery, [senderCard, receiverCard, amount], function(errdb, resdb) {
+                if(errdb) {
+                  res.status(400).json({message: 'Transfer failed'});
+                  return;
+                }
+
+                res.status(200).json({message: 'Transfer successful'});
+              });
+            });
           });
-        });
+        }
       });
     });
   });

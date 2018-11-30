@@ -14,7 +14,6 @@ CREATE TABLE Transactions (
   senderCardNumber varchar(16) NOT NULL,
   receiverCardNumber varchar(16) NOT NULL,
   amount int NOT NULL,
-  transactionDate date NOT NULL,
   PRIMARY KEY (idTransaction),
   foreign KEY (senderCardNumber)
     references Customers(cardNumber)
@@ -23,3 +22,6 @@ CREATE TABLE Transactions (
     references Customers(cardNumber)
     on delete cascade on update cascade
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+insert into customers(cardNumber,balance) values(0,0);
+insert into customers(cardNumber, balance) values(123,10000000);
