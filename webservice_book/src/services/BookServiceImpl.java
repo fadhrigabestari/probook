@@ -203,8 +203,8 @@ public class BookServiceImpl implements BookService {
                         }
                     }
 
-                }      
-                
+                }
+
             } catch (JSONException e) {
                 System.out.println("No books found.");
                 Book[] empty_book = new Book[1];
@@ -312,87 +312,53 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book[] recommendBook(String[] category) throws Exception {
+    public Book[] recommendBook(String category) throws Exception {
 
         SQLConnect.getConnectionProbook();
         String query;
         ResultSet rs;
         String get_url;
         //ambil dulu id kategori
-        int[] categoriesId = new int[category.length];
+        int categoriesId = 0;
 
-        for (int i=0; i< category.length; i++) {
-            query = "select idCategory from categorynames where name = ?";
-            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
-            SQLConnect.stmt.setString(1, category[i]);    
-            rs = SQLConnect.stmt.executeQuery();
+        System.out.println("halo");
+        query = "select idCategory from categorynames where name = ?";
+        SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+        SQLConnect.stmt.setString(1, category);
+        rs = SQLConnect.stmt.executeQuery();
 
-            while(rs.next()) {
-                categoriesId[i] = rs.getInt("idCategory");
+        if (rs.next()) {
+                categoriesId = rs.getInt("idCategory");
             }
-        }
 
-        int[] arrQuantity = new int[category.length];
-        String[] arrIdBook = new String[category.length];
         String recommendedBook= "-";
-
-        int row=0;
-        for (int i=0; i< categoriesId.length; i++) {
-            String query_temp = "select count(idTransaction) from transactions natural join books natural join bookcategories where idCategory= ?";
-            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query_temp);
-            SQLConnect.stmt.setInt(1, categoriesId[i]);
-            rs = SQLConnect.stmt.executeQuery();
-            if (rs.next()) {
-                if (rs.getInt("count(idTransaction)") >0) {
-                    row = rs.getInt("count(idTransaction)");
-                }
+        String query_temp = "select count(idTransaction) from transactions natural join books natural join bookcategories where idCategory= ?";
+        SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query_temp);
+        SQLConnect.stmt.setInt(1, categoriesId);
+        rs = SQLConnect.stmt.executeQuery();
+        if (rs.next()) {
+            System.out.println("masukdatabase");
+            ResultSet rs1;
+            //ambil id buku sama jumlah order yang
+            query = "select temp.idBook, max(temp.sumq) as max_quantity from (select idBook, sum(quantity) as sumq from transactions natural join books natural join bookcategories where idCategory= ? group by idBook) as temp group by idBook";
+            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+            SQLConnect.stmt.setInt(1, categoriesId);
+            rs1 = SQLConnect.stmt.executeQuery();
+            if (rs1.next()) {
+                recommendedBook = rs1.getString("idBook");
             }
-        } 
-
-        if (row>0) {
-            for (int i=0; i< categoriesId.length; i++) {
-                //ambil id buku sama jumlah order yang
-                query = "select idBook, max(sumq) as max_quantity from (select idBook, sum(quantity) as sumq from transactions natural join books natural join bookcategories where idCategory= ? group by idBook) group by idBook";
-                SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
-                SQLConnect.stmt.setString(1, category[i]);
-                rs = SQLConnect.stmt.executeQuery();
-                if (rs.next()) {
-                    arrQuantity[i] = rs.getInt("max_quantity");
-                    arrIdBook[i] = rs.getString("idBook");
-                }
-            }      
-             //cek maksimum quantity
-            int max=0;
-            recommendedBook=arrIdBook[0];
-            for (int i=0; i<category.length; i++) {
-                if (arrQuantity[i]>max) {
-                    max=arrQuantity[i];
-                    recommendedBook= arrIdBook[i];
-                }
-            }
-
         } else {
             //random
+            System.out.println("MASUK GOOGLE BOOKS");
             String recommendedCategory="-";
-            int j=0;
-            while ((recommendedCategory.equals("-")) && (j < category.length)) {
-                if (!category[j].equals("-")) {
-                    recommendedCategory= category[j];
-                }
-                j++;
+            query = "select name from categorynames where idCategory= 1";
+            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+            rs = SQLConnect.stmt.executeQuery();
+            if (rs.next()) {
+                recommendedCategory= rs.getString("name");
             }
-            if (recommendedCategory.equals("-")) {
-                //cari yang gak - di database
-                query = "select name from categorynames where idCategory= 1";
-                SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
-                rs = SQLConnect.stmt.executeQuery();
-
-                while(rs.next()) {
-                    recommendedCategory= rs.getString("name");
-                }
                 recommendedBook = "subject:" + recommendedCategory;
-            }
-        } 
+        }
         SQLConnect.closeConnectionProbook();
        return searchBook(recommendedBook);
     }

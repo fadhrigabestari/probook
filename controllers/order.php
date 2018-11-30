@@ -40,6 +40,25 @@ if($buy) {
     $bookstmt->execute([$content['idBook']]);
   }
 
+  $getcatstmt = $db_conn->prepare('select * from categorynames where name = ?');
+  $getcatstmt->execute([$content['category']]);
+  $getcat = $getcatstmt->fetch();
+  if ($getcat == false) {
+    $categorynamestmt = $db_conn->prepare('insert into categorynames(name) values(?)');
+    $categorynamestmt->execute([$content['category']]);
+  }
+  $idcatstmt = $db_conn->prepare('select idCategory from categorynames where name=?');
+  $idcatstmt->execute([$content['category']]);
+  $idcat = $idcatstmt->fetch();
+
+  $getcat2stmt = $db_conn->prepare('select * from BookCategories where idBook = ?');
+  $getcat2stmt->execute([$content['idBook']]);
+  $getcat2 = $getcat2stmt->fetch();
+  if($getcat2 == false) {
+    $bookcategorystmt = $db_conn->prepare('insert into BookCategories values(?,?)');
+    $bookcategorystmt->execute([$content['idBook'],$idcat['idCategory']]);
+  }
+
   $orderDate = date('Y-m-d');
   $orderstmt = $db_conn->prepare('insert into Transactions(idBook,
     idUser, orderDate, quantity)

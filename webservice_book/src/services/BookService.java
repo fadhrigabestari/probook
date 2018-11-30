@@ -17,13 +17,13 @@ import models.Book;
 public interface BookService {
 	@WebMethod
 	public Book[] searchBook(String title_input)  throws Exception;
-	
+
 	@WebMethod
 	public Book detailBook(String id) throws Exception;
 
 	@WebMethod
 	public boolean buyBook(String id, int n, String account_number) throws Exception;
-	
+
 	@WebMethod
-	public Book[] recommendBook(String[] category) throws Exception;
+	public Book[] recommendBook(String category) throws Exception;
 }
