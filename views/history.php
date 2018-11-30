@@ -6,12 +6,13 @@
   <body>
   <?php require 'views/header.php'; ?>
     <h1 class="history">History</h1>
+    <?php $i = 0; ?>
     <?php foreach ($results as $result) { ?>
       <div class='historycontent'>
         <div class='bookdetail'>
-          <div class='booking'><img class='image' src='<?php es("uploadimg/${result['cover']}");?>'></div>
+          <div class='booking'><img class='image' src='<?php e($details['cover']);?>'></div>
           <div class='book1'>
-            <div class='bookname'><?php e($result['title']);?></div>
+            <div class='bookname'><?php e($details['title']);?></div>
             <div class='countbook'><span>Jumlah :&nbsp;</span><span id='count'><?php e($result['quantity']);?></span></div>
             <?php if(($result['comment'])!==null) { ?>
               <div class='review'>Anda sudah memberikan review</div>
