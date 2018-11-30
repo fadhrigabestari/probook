@@ -39,7 +39,7 @@
       <div class='rowcontainer largewidthcontainer largemarginleft flexcenter smallmarginbottom'>
         <img class='verysmallimg noborder verysmallpaddingleft verysmallpaddingright' src=<?php es('img/card.png');?>>
         <div class='mediumfont helvetica mediumflex smallpaddingleft'>Card Number</div>
-        <div class='mediumfont helvetica largeflex'>1234<?php /*e($result['phone'])*/?></div>
+        <div class='mediumfont helvetica largeflex'><?php e($result['cardNumber'])?></div>
       </div>
     </div>
   </body>

@@ -21,18 +21,18 @@ create table if not exists Users (
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists Books (
-  idBook varchar(70) not null,
+  idBook varchar(100) not null,
   primary key (idBook)
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists CategoryNames (
   idCategory int not null auto_increment,
-  name varchar(70) not null,
+  name varchar(255) not null,
   primary key (idCategory)
 ) engine=InnoDB default charset=utf8mb4;
 
 create table if not exists BookCategories (
-  idBook varchar(70) not null,
+  idBook varchar(100) not null,
   idCategory int not null,
   primary key (idBook, idCategory),
   foreign key (idBook)
@@ -45,7 +45,7 @@ create table if not exists BookCategories (
 
 create table if not exists Transactions (
   idTransaction int not null auto_increment,
-  idBook varchar(70) not null,
+  idBook varchar(100) not null,
   idUser int not null,
   orderDate date not null,
   quantity int not null,

@@ -1,5 +1,4 @@
-
-package services;
+ package services;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -158,7 +157,6 @@ public class BookServiceImpl implements BookService {
 
                     //insert relation book - category (multivalues)
                     for (int j=0; j< categories.length; j++) {
-                        //cari id kategori dari kategori
                         query = "select idCategory from categorynames where name = ?";
                         SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
                         SQLConnect.stmt.setString(1, categories[j]);
@@ -167,10 +165,9 @@ public class BookServiceImpl implements BookService {
                         while(rs.next()) {
                             idCategory = rs.getInt("idCategory");
                         }
-                        query = "select idBook from bookcategories where idBook = ? and idCategory = ?";
+                        query = "select idBook from bookcategories where idBook = ?";
                         SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
                         SQLConnect.stmt.setString(1, idBook);
-                        SQLConnect.stmt.setString(2, String.valueOf(idCategory));
                         rs = SQLConnect.stmt.executeQuery();
                         if(!rs.next()) {
                             query = "insert into bookcategories values (?,?)";
@@ -191,10 +188,11 @@ public class BookServiceImpl implements BookService {
                         while(rs.next()) {
                             idAuthor= rs.getInt("idAuthor");
                         }
-                        query = "select idBook from bookauthors where idBook = ? and idAuthor = ?";
+
+                        query = "select idBook from bookauthors where idBook = ?";
                         SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
                         SQLConnect.stmt.setString(1, idBook);
-                        SQLConnect.stmt.setString(2, String.valueOf(idAuthor));
+
                         rs = SQLConnect.stmt.executeQuery();
                         if(!rs.next()) {
                             query = "insert into bookauthors values (?,?)";
@@ -204,6 +202,7 @@ public class BookServiceImpl implements BookService {
                             SQLConnect.stmt.executeUpdate();
                         }
                     }
+
                 }      
                 
             } catch (JSONException e) {
@@ -218,7 +217,7 @@ public class BookServiceImpl implements BookService {
 
         SQLConnect.closeConnection();
         return array_book;
-            
+
     }
 
     @Override
@@ -276,11 +275,11 @@ public class BookServiceImpl implements BookService {
         i = 0;
 
         while(rs.next()) {
-            authors[i] = rs.getString("name");
+            categories[i] = rs.getString("name");
             i++;
         }
         book.setAuthors(authors);
-        book.setCategories(authors);
+        book.setCategories(categories);
 
         SQLConnect.closeConnection();
         return book;

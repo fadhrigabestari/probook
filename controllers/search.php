@@ -18,16 +18,18 @@ if (!isset($_REQUEST['search'])) {
       $book_id = $results->item[$i]->idBook;
       $stmt = $db_conn->prepare('select idTransaction, avg(rating) as avg_rating, count(idTransaction) as count_id from transactions natural join reviews where idBook = ? group by idBook');
       $stmt->execute([$book_id]);
-      $ratings = $stmt->fetchAll();
-       if(count($ratings) !== 0) {
+
+      $ratings = $stmt->fetch();
+       if($ratings) {
           $results->item[$i]->rating = $ratings['avg_rating'];
-          $results->item[$i]->ratingCount = $ratings['count_id'];  
+          $results->item[$i]->ratingCount = $ratings['count_id'];
+
        }
-      
+
   }
-  
-    
- 
+
+
+
 
   $result = json_encode($results);
   echo($result);

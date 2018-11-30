@@ -33,8 +33,9 @@ catch(Exception $e) {
 
 if($buy) {
   $getbookstmt = $db_conn->prepare('select * from Books where idBook = ?');
-  $result = $getbookstmt->execute([$content['idBook']]);
-  if (!isset($getbookstmt)) {
+  $getbookstmt->execute([$content['idBook']]);
+  $getbook = $getbookstmt->fetch();
+  if ($getbook == false) {
     $bookstmt = $db_conn->prepare('insert into Books(idBook) values(?)');
     $bookstmt->execute([$content['idBook']]);
   }
@@ -47,8 +48,12 @@ if($buy) {
   if($orderstmt) {
     $last_id = $db_conn->lastInsertId();
   }
-  $result = array("idTransaction"=>$last_id);
+  $result = array("idTransaction"=>$last_id,"code"=>200);
 
+  header('content-type: application/json; charset=utf-8');
+  echo json_encode($result);
+} else {
+  $result = array("code"=>400);
   header('content-type: application/json; charset=utf-8');
   echo json_encode($result);
 }
