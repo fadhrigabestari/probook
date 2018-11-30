@@ -12,7 +12,7 @@ public class SQLConnect {
         String user = Config.user;
         String password = Config.password;
         Class.forName(driver);
-        connection = DriverManager.getConnection(database,user,password);
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/book");
     }
 
     public static void closeConnection() throws SQLException {

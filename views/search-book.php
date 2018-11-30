@@ -35,10 +35,9 @@
                         <div class='bookscore'>
                           <span class='bookauthor' id='bookauthor'>{{book.authors}}</span>
                           <span>&nbsp;-&nbsp;</span>
-
-                          <span class='bookrating'>belommmmmmmm</span>
+                          <span class='bookrating'>{{book.rating}}</span>
                           <span>/5.0 (</span>
-                          <span class='bookvotecount'>belommmmm</span>
+                          <span class='bookvotecount'>{{book.ratingCount}}</span>
                           <span>&nbsp;votes)</span>
                         </div>
                         <div class='bookdesc' id='bookdesc'>{{book.description}}</div>

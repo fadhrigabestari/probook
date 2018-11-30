@@ -1,9 +1,10 @@
 drop table if exists Reviews;
 drop table if exists Transactions;
 drop table if exists BookCategories;
-drop table if exists CategoryNames;
+drop table if exists categoryNames;
 drop table if exists Books;
 drop table if exists Users;
+
 
 create table if not exists Users (
   idUser int not null auto_increment,
