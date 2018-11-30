@@ -40,7 +40,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $detail['cover'] = (string)$book->cover;
     $detail['description'] = (string)$book->description;
     $detail['authors'] = $book->authors;
-    echo $detail['authors'];
     $detail['categories'] = $book->categories;
 
     require 'views/history-review.php';

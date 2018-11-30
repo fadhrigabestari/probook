@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import java.util.Arrays;
-
+import java.util.Random;
 
 import models.Book;
 import utilities.BookServiceUtil;
@@ -351,13 +351,9 @@ public class BookServiceImpl implements BookService {
             //random
             System.out.println("MASUK GOOGLE BOOKS");
             String recommendedCategory="-";
-            query = "select name from categorynames where idCategory= 1";
-            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
-            rs = SQLConnect.stmt.executeQuery();
-            if (rs.next()) {
-                recommendedCategory= rs.getString("name");
-            }
-                recommendedBook = "subject:" + recommendedCategory;
+            Random r = new Random();
+            char c = (char) (r.nextInt(26) + 'a');
+            recommendedBook = Character.toString(c);
         }
         SQLConnect.closeConnectionProbook();
        return searchBook(recommendedBook);
