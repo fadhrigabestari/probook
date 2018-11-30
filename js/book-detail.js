@@ -27,8 +27,12 @@ function addOrder(orderurl) {
     if(this.readyState == 4 && this.status == 200) {
       console.log(this.responseText);
       responsemsg = JSON.parse(this.responseText);
-      document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];
-      addPopUp();
+      if(responsemsg['code'] == 200) {
+        document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];
+        addPopUp();
+      } else {
+        addErrPopUp();
+      }
     } else if(this.status != 200) {
       addErrPopUp();
     }
