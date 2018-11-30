@@ -63,6 +63,10 @@
           <div class='bookrating'><?php e(number_format($avgrating,1));?>&nbsp;/ 5.0</div>
         </div>
       </div>
+      <div class='author'>
+        <span>Catogory :</span>
+        <span id='category'><?php e($book->categories);?></span>
+      </div>
       <div>
         <h2 class='h2heading'>Order</h2>
         <div class='numberorder'>

@@ -23,7 +23,7 @@ public interface BookService {
 
 	@WebMethod
 	public boolean buyBook(String id, int n, String account_number) throws Exception;
-	
+
 	@WebMethod
-	public Book[] recommendBook(String[] category) throws Exception;
+	public Book[] recommendBook(String category) throws Exception;
 }

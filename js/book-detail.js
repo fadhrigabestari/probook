@@ -18,7 +18,8 @@ function addOrder(orderurl) {
   http = new XMLHttpRequest();
   content = JSON.stringify({
     'idBook': document.getElementById("idBook").value,
-    'quantity': document.getElementById("norder").value
+    'quantity': document.getElementById("norder").value,
+    'category': document.getElementById("category").innerHTML
   });
 
   http.open('POST', orderurl)
