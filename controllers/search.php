@@ -23,10 +23,10 @@ if (!isset($_REQUEST['search'])) {
            if($ratings) {
               $results->item[$i]->rating = $ratings['avg_rating'];
               $results->item[$i]->ratingCount = $ratings['count_id'];
-
            }
       }
-      $result = json_encode($results);
+      
   }
+  $result = json_encode($results);
   echo($result);
 }

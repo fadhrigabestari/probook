@@ -20,7 +20,7 @@
             <div class='resultheading'>
                 <h1 class='searchheading'>Search Result</h1>
                 <div id='countresult'>
-                  <span>Found </span><span id='count'></span><span> result(s)</span>
+                  <span>Found </span><span id='count'></span>{{control.books.length}}<span> result(s)</span>
                 </div>
             </div>
 
