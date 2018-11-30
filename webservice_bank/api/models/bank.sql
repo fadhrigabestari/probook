@@ -24,4 +24,4 @@ CREATE TABLE Transactions (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 insert into customers(cardNumber,balance) values(0,0);
-insert into customers(cardNumber, balance) values(123,100000);
+insert into customers(cardNumber, balance) values(123,10000000);
