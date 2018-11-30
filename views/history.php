@@ -10,9 +10,9 @@
     <?php foreach ($results as $result) { ?>
       <div class='historycontent'>
         <div class='bookdetail'>
-          <div class='booking'><img class='image' src='<?php e($details['cover']);?>'></div>
+          <div class='booking'><img class='image' src='<?php e($details[$i]['cover']);?>'></div>
           <div class='book1'>
-            <div class='bookname'><?php e($details['title']);?></div>
+            <div class='bookname'><?php e($details[$i]['title']);?></div>
             <div class='countbook'><span>Jumlah :&nbsp;</span><span id='count'><?php e($result['quantity']);?></span></div>
             <?php if(($result['comment'])!==null) { ?>
               <div class='review'>Anda sudah memberikan review</div>
@@ -35,6 +35,6 @@
           </div>
         </div>
       </div>
-    <?php } ?>
+    <?php $i = $i + 1;} ?>
   </body>
 </html>

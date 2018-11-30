@@ -29,8 +29,9 @@ try {
     $book = $soap->detailBook($id);
     $temptitle = (string)$book->title;
     $tempcover = (string)$book->cover;
-    $details['title'] = $temptitle;
-    $details['cover'] = $tempcover;
+    $detail['title'] = $temptitle;
+    $detail['cover'] = $tempcover;
+    array_push($details, $detail);
   }
 }
 catch(Exception $e) {
