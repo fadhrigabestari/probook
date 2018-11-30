@@ -24,8 +24,12 @@ $options = array(
   'exceptions'=>true,
 );
 try {
+  $getcardstmt = $db_conn->prepare('select cardNumber from users where username = ?');
+  $getcardstmt->execute([$auth_user['username']]);
+  $getcard = $getcardstmt->fetch();
+
   $soap = new SoapClient($wsdl, $options);
-  $buy = $soap->buyBook($content['idBook'], $content['quantity'], 123);
+  $buy = $soap->buyBook($content['idBook'], $content['quantity'], $getcard['cardNumber']);
 }
 catch(Exception $e) {
   die($e->getMessage());
