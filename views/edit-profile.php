@@ -33,7 +33,8 @@
         </div>
         <div class='rowcontainer flexstart mediummarginleft smallmargintop smallmarginbottom'>
           <div class='normalfont smallflex normalmarginleft'>Card Number</div>
-          <input type='text' class='smallmarginleft normalfont mediumflex normalmarginright' id='profile-card-number' name='card-number' value=1234>
+          <input type='text' class='smallmarginleft normalfont mediumflex normalmarginright' id='profile-card-number' name='cardNumber' value='<?php e($result['cardNumber']);?>'>
+          <img class='checkmark marginright verysmallmarginleft' id='cardnumbercheck' src='<?php es('img/clear.png');?>'>
         </div>
       </div>
       <div class='spacebetweencontainer'>
