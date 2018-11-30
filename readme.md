@@ -1,104 +1,113 @@
 # Tugas 2 IF3110 Pengembangan Aplikasi Berbasis Web 
 
-Melakukan *upgrade* Website toko buku online pada Tugas 1 dengan mengaplikasikan **arsitektur web service REST dan SOAP**.
-
-### Tujuan Pembuatan Tugas
-
-Diharapkan dengan tugas ini anda dapat mengerti:
-* Produce dan Consume REST API
-* Produce dan Consume Web Services dengan protokol SOAP
-* Membuat web application yang akan memanggil web service secara REST dan SOAP.
-* Memanfaatkan web service eksternal (API)
+Pro-book merupakan Website toko buku online untuk melakukan pemesanan dan pembelian buku online. User dapat melakukan pemesanan buku, melihat detil buku, memesan buku, melihat rekomendasi buku, dan memberikan review terhadap buku yang sudah dibeli. Website ini mengaplikasikan **arsitektur web service REST dan SOAP**. Arsitektur aplikasi memanfaatkan 2 buah webservice, yaitu webservice bank dan webservice buku.
 
 ## Anggota Tim
 
-Setiap kelompok beranggotakan **3 orang dari kelas yang sama**. Jika jumlah mahasiswa dalam satu kelas modulo 3 menghasilkan 1, maka hanya 1 kelompok terdiri dari 4 mahasiswa. Jika jumlah mahasiswa modulo 3 menghasilkan 2, maka ada dua kelompok yang beranggotakan 4 orang. Seluruh anggota kelompok **harus berbeda dengan tugas 1**.
+1. Nadija Herdwina Putri Soerojo - 13516
+2. Rinda Nur Hafizha - 13516151
+3. Muhammad Fadhriga Bestari - 13516154
 
-## Petunjuk Pengerjaan
-
-1. Buatlah organisasi pada gitlab dengan format "IF3110-2018-KXX-nama kelompok", dengan XX adalah nomor kelas.
-2. Tambahkan anggota tim pada organisasi anda.
-3. Fork pada repository ini dengan organisasi yang telah dibuat.
-4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. [DELIVERABLE] Buat tugas sesuai spesifikasi dan silakan commit pada repository anda (hasil fork). Lakukan berberapa commit dengan pesan yang bermakna, contoh: `add register form`, `fix logout bug`, jangan seperti `final`, `benerin dikit`. Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan). Sebaiknya commit dilakukan setiap ada penambahan fitur. **Commit dari setiap anggota tim akan mempengaruhi penilaian individu.** Jadi, setiap anggota tim harus melakukan sejumlah commit yang berpengaruh terhadap proses pembuatan aplikasi.
-6. Hapus bagian yang tidak perlu dari *readme* ini.
-7. [DELIVERABLE] Berikan penjelasan mengenai hal di bawah ini pada bagian **Penjelasan** dari *readme* repository git Anda:
-    - Basis data dari sistem yang Anda buat, yaitu basis data aplkasi pro-book, webservice bank, dan webservice buku.
-    - Konsep *shared session* dengan menggunakan REST.
-    - Mekanisme pembangkitan token dan expiry time pada aplikasi Anda.
-    - Kelebihan dan kelemahan dari arsitektur aplikasi tugas ini, dibandingkan dengan aplikasi monolitik (login, CRUD DB, dll jadi dalam satu aplikasi)
-8. Pada *readme* terdapat penjelasan mengenai pembagian tugas masing-masing anggota (lihat formatnya pada bagian **pembagian tugas**).
-9. Merge request dari repository anda ke repository ini dengan format **Nama kelompok** - **NIM terkecil** - **Nama Lengkap dengan NIM terkecil** sebelum **Jumat, 30 November 2018 pukul 23.59**.
-
-### Deskripsi Tugas
 ![](temp/architecture.png)
 
-Pada tugas 2, Anda diminta untuk mengembangkan aplikasi toko buku online sederhana yang sudah Anda buat pada tugas 1. Arsitektur aplikasi diubah agar memanfaatkan 2 buah webservice, yaitu webservice bank dan webservice buku. Baik aplikasi maupun kedua webservice, masing-masing memiliki database sendiri. Jangan menggabungkan ketiganya dalam satu database. Anda juga perlu mengubah beberapa hal pada aplikasi pro-book yang sudah Anda buat.
+## Webservice bank
 
-#### Webservice bank
-
-Anda diminta membuat sebuah webservice bank sederhana yang dibangun di atas **node.js**. Webservice bank memiliki database sendiri yang menyimpan informasi nasabah dan informasi transaksi. Informasi nasabah berisi nama, nomor kartu, dan saldo. Informasi transaksi berisi nomor kartu pengirim, nomor kartu penerima, jumlah, dan waktu transaksi. Informasi lain yang menurut Anda dibutuhkan silahkan ditambahkan sendiri. Database webservice bank harus terpisah dari database aplikasi pro-book.
+Webservice bank dibangun di atas **node.js**. Webservice bank memiliki database yang menyimpan informasi nasabah dan informasi transaksi. 
 
 Webservice bank menyediakan service untuk validasi nomor kartu dan transfer. Webservice bank diimplementasikan menggunakan protokol **REST**.
 - Service validasi nomor kartu dilakukan dengan memeriksa apakah nomor kartu tersebut ada pada database bank. Jika iya, berarti kartu tersebut valid.
   
 - Service transfer menerima input nomor kartu pengirim, penerima, dan jumlah yang ditransfer. Jika saldo mencukupi, maka transfer berhasil dan uang sejumlah tersebut dipindahkan dari pengirim ke penerima. Transaksi tersebut juga dicatat dalam database webservice. Jika saldo tidak mencukupi, maka transaksi ditolak dan tidak dicatat di database.
   
-#### Webservice buku
+## Webservice buku
 
 Webservice ini menyediakan daftar buku beserta harganya yang akan digunakan oleh aplikasi pro-book. Webservice buku dibangun di atas **java servlet**. Service yang disediakan webservice ini antara lain adalah pencarian buku, mengambil detail buku, melakukan pembelian, serta memberikan rekomendasi buku sederhana. Webservice ini diimplementasikan menggunakan **JAX-WS dengan protokol SOAP**.
 
-Webservice ini memanfaatkan **Google Books API melalui HttpURLConnection. Tidak diperbolehkan menggunakan Google Books Client Library for Java**. Data-data buku yang dimiliki oleh webservice ini akan mengambil dari Google Books API. Silahkan membaca [dokumentasinya](https://developers.google.com/books/docs/overview) untuk detail lebih lengkap. Data pada Google Books API tidak memiliki harga, maka webservice buku perlu memiliki database sendiri berisi data harga buku-buku yang dijual. Database webservice buku harus terpisah dari database bank dan dari database aplikasi pro-book.
+Webservice ini memanfaatkan **Google Books API melalui HttpURLConnection. Tidak diperbolehkan menggunakan Google Books Client Library for Java**. Webservice buku perlu memiliki database berisi data harga buku-buku yang dijual.
 
 Detail service yang disediakan webservice ini adalah:
 
-- Pencarian buku menerima keyword judul. Keyword ini akan diteruskan ke Google Books API dan mengambil daftar buku yang mengandung keyword tersebut pada judulnya. Hasil tersebut kemudian dikembalikan pada aplikasi setelah diproses. Proses yang dilakukan adalah menghapus data yang tidak dibutuhkan, menambahkan harga buku jika ada di database, dan mengubahnya menjadi format SOAP.
+- Webservice searchBook merupakan service yang melakukan pencarian buku yang menerima keyword judul. Keyword ini akan diteruskan ke Google Books API dan mengambil daftar buku yang mengandung keyword tersebut pada judulnya. Hasil tersebut kemudian dikembalikan pada aplikasi setelah diproses. Proses yang dilakukan adalah menghapus data yang tidak dibutuhkan, menambahkan harga buku jika ada di database, dan mengubahnya menjadi format SOAP.
 
-- Pengambilan detail juga mengambil data dari Google Books API, seperti service search. Baik service ini maupun search, informasi yang akan dikembalikan hanya informasi yang dibutuhkan. Jangan lansung melemparkan semua data yang didapatkan dari Google Books API ke aplikasi. Karena pengambilan detail buku menggunakan ID buku, maka ID buku webservice harus mengikuti ID buku Google Books API. Pada service ini, harga buku juga dicantumkan.
+- Webservice detailBook merupakan service yang melakukan pengambilan detail dan juga mengambil data dari Google Books API, seperti service search. Pada service ini, harga buku juga dicantumkan.
 
-- Webservice ini menangani proses pembelian. Service ini menerima masukan id buku yang dibeli, jumlah yang dibeli, serta nomor rekening user yang membeli buku. Nomor rekening tersebut akan digunakan untuk mentransfer uang sejumlah harga total buku. Jika transfer gagal, maka pembelian buku juga gagal.
+- Webservice buyBook menangani proses pembelian. Service ini menerima masukan id buku yang dibeli, jumlah yang dibeli, serta nomor rekening user yang membeli buku. Nomor rekening tersebut akan digunakan untuk mentransfer uang sejumlah harga total buku. Jika transfer gagal, maka pembelian buku juga gagal.
 
   Jumlah buku yang berhasil dibeli dicatat di database. Webservice menyimpan ID buku, kategori (genre), dan jumlah total pembelian buku tersebut. Data ini akan digunakan untuk memberikan rekomendasi. Jika pembelian gagal maka data tidak dicatat pada aplikasi.
 
-- Webservice juga dapat memberikan rekomendasi sederhana. Input dari webservice ini adalah kategori buku. Kategori buku yang dimasukkan boleh lebih dari 1. Buku yang direkomendasikan adalah buku yang memiliki jumlah pembelian total terbanyak yang memiliki kategori yang sama dengan daftar kategori yang menjadi input. Data tersebut didapat dari service yang mencatat jumlah pembelian.
+- Webservice recommendBook dapat memberikan rekomendasi sederhana. Input dari webservice ini adalah kategori buku. Kategori buku yang dimasukkan boleh lebih dari 1. Buku yang direkomendasikan adalah buku yang memiliki jumlah pembelian total terbanyak yang memiliki kategori yang sama dengan daftar kategori yang menjadi input. Data tersebut didapat dari service yang mencatat jumlah pembelian.
   
   Jika buku dengan kategori tersebut belum ada yang terjual, maka webservice akan mengembalikan 1 buku random dari hasil pencarian pada Google Books API. Pencarian yang dilakukan adalah buku yang memiliki kategori yang sama dengan salah satu dari kategori yang diberikan (random).
   
-#### Perubahan pada aplikasi pro-book
+## Perubahan pada aplikasi pro-book
 
-Karena memanfaatkan kedua webservice tersebut, akan ada perubahan pada aplikasi yang Anda buat.
+Karena memanfaatkan kedua webservice tersebut, ada perubahan pada aplikasi yang dibuat sebelumnya pada Tugas Besar 1.
 
 - Setiap user menyimpan informasi nomor kartu yang divalidasi menggunakan webservice bank. Validasi dilakukan ketika melakukan registrasi atau mengubah informasi nomor kartu. Jika nomor kartu tidak valid, registrasi atau update profile gagal dan data tidak berubah.
 
 - Data buku diambil dari webservice buku, sehingga aplikasi tidak menyimpan data buku secara lokal. Setiap kali aplikasi membutuhkan informasi buku, aplikasi akan melakukan request kepada webservice buku. Hal ini termasuk proses search dan melihat detail buku.
 
-  Database webservice cukup menyimpan harga sebagian buku yang ada di Google Books API. Buku yang harganya tidak Anda definisikan di database boleh dicantumkan NOT FOR SALE dan tidak bisa dibeli, tetapi tetap bisa dilihat detailnya.
+  Database webservice cukup menyimpan harga sebagian buku yang ada di Google Books API. Buku yang harganya tidak didefinisikan di database dicantumkan NOT FOR SALE dan tidak bisa dibeli, tetapi tetap bisa dilihat detailnya.
 
-- Proses pembelian buku pada aplikasi ditangani oleh webservice buku. Status pembelian (berhasil/gagal dan alasannya) dilaporkan kepada user dalam bentuk notifikasi. Untuk kemudahan, tidak perlu ada proses validasi dalam melakukan transfer
+- Proses pembelian buku pada aplikasi ditangani oleh webservice buku. Status pembelian (berhasil/gagal dan alasannya) dilaporkan kepada user dalam bentuk notifikasi. Tidak dilakukan proses validasi dalam melakukan transfer 
 
-- Pada halaman detail buku, terdapat rekomendasi buku yang didapatkan dari webservice buku. Asumsikan sendiri tampilan yang sesuai.
+- Pada halaman detail buku, terdapat rekomendasi buku yang didapatkan dari webservice buku. 
 
-- Halaman search-book dan search-result pada tugas 1 digabung menjadi satu halaman search yang menggunakan AngularJS. Proses pencarian buku diambil dari webservice buku menggunakan **AJAX**. Hasil pencarian akan ditampilkan pada halaman search menggunakan AngularJS, setelah mendapatkan respon dari webservice. Ubah juga tampilan saat melakukan pencarian untuk memberitahu jika aplikasi sedang melakukan pencarian atau tidak ditemukan hasil.
+- Halaman search-book dan search-result digabung menjadi satu halaman search yang menggunakan AngularJS. Proses pencarian buku diambil dari webservice buku menggunakan **AJAX**. Hasil pencarian akan ditampilkan pada halaman search menggunakan AngularJS, setelah mendapatkan respon dari webservice. 
 
-    Berikut adalah komponen pada AngularJS yang harus digunkan pada aplikasi Anda:
+    Berikut adalah komponen pada AngularJS yang harus digunkan pada aplikasi:
     - Data binding (ng-model directives)
     - Controllers (ng-controllers)
     - ng-repeat, untuk menampilkan list
 
-- Aplikasi Anda menggunakan `access token` untuk menentukan active user. Mekanisme pembentukan dan validasi access token dapat dilihat di bagian *Mekanisme access token*.
+- Aplikasi menggunakan `access token` untuk menentukan active user.
 
-#### Mekanisme access token
-`Access token` berupa string random. Ketika user melakukan login yang valid, sebuah access token di-generate, disimpan dalam database server, dan diberikan kepada browser. Satu `access token` memiliki `expiry time` token (berbeda dengan expiry time cookie) dan hanya dapat digunakan pada 1 *browser/agent* dari 1 *ip address* tempat melakukan login. Sebuah access token mewakilkan tepat 1 user. Sebuah access token dianggap valid jika:
-- Access token terdapat pada database server dan dipasangkan dengan seorang user.
-- Access token belum expired, yaitu expiry time access token masih lebih besar dari waktu sekarang.
-- Access token digunakan oleh browser yang sesuai.
-- Access token digunakan dari ip address yang sesuai.
+## Database
 
-Jika access token tidak ada atau tidak valid, maka aplikasi melakukan *redirect* ke halaman login jika user mengakses halaman selain login atau register. Jika access token ada dan valid, maka user akan di-*redirect* ke halaman search jika mengakses halaman login. Fitur logout akan menghapus access token dari browser dan dari server.
+### Database Aplikasi Probook
 
-#### Catatan
+Terdapat beberapa perubahan pada basis data probook agar web dapat dipisah menjadi beberapa webservice. Pertama, tabel buku tidak lagi disimpan secara penuh pada database ini. Pada database probook, tabel Books hanya menyimpan idBook saja, karena idBook masih diperlukan untuk melakukan transaksi dan review. Terdapat juga penambahan carNumber pada tabel users karena user sekarang memiliki kartu kredit yang perlu divalidasi dan disimpan. User juga menyimpan token yang telah di-generate untuk menandakan otentikasi seorang user.
 
-Hal-hal detail yang disebutkan pada spesifikasi di atas seperti data yang disimpan di database, parameter request, dan jenis service yang disediakan adalah spesifikasi minimum yang harus dipenuhi. Anda boleh menambahkan data/parameter/service lain yang menurut Anda dibutuhkan oleh aplikasi atau web service lainnya. Jika Anda ingin mengubah data/parameter/service yang sudah disebutkan di atas, Anda wajib mempertanggung jawabkannya dan memiliki argumen yang mendukung keputusan tersebut.
+### Database Webservice Book
+
+Database disimpan pada webservice book. Database ini menyimpan semua detail buku yang diperlukan aplikasi yang datanya didapat dari google books api. Data buku disimpan setiap kali search book dilakukan. Pada database webservice book, terdapat beberapa tabel yang dipecah dari tabel buku karena terdapat beberapa kolom pada database tersebut yang dapat bernilai lebih dari satu, yaitu author dan category. Maka dari itu, disimpan idCategory dan idAuthor yang terpisah dari tabel Books yang menandakan siapa saja dan apa saja author dan kategori untuk setiap buku yang disimpan di basis data tersebut.
+
+### Database Webservice Bank
+
+Database ini menyimpan data yang digunakan pada webservice bank yang memiliki 2 tabel, yaitu tabel Customers dan Transactions. 
+
+- Tabel Customer 
+
+menyimpan data dari nasabah yang memiliki atribut idCustomer, Name yang merupakan nama dari customer, cardNumber yang merupakan nomor kartu nasabah, dan balance yaitu saldo yang dimiliki customer.
+
+- Tabel Transactions
+
+menyimpan data transaksi transfer yang memiliki atribut idTransaction, senderCardNumber yang merupakan nomor kartu pengirim saat transfer, receiverCardNumber yang merupakan nomor kartu penerima saat transfer, amount yang merupakan jumlah uang yang ditransfer, dan transactionDate yang merupakan waktu saat transfer dilakukan
+
+### Konsep shared session dengan menggunakan REST
+
+REST merupakan sebuah konvensi untuk melakukan sebuah HTTP request yang harus disetujui oleh client dan server. Pada dasarnya, REST mengaplikasikan state-less protokol yang mengakibatkan tidak adanya data client yang perlu disimpan oleh server.
+
+Server tidak mengetahui keberadaan ataupun keadaan setiap user yang ada. Keberadaan user tidak pernah disimpan oleh server, mengakibatkan setiap data yang diperlukan untuk melakukan komunikasi antara client dan server disimpan semua oleh client. Hal ini disebabkan karena meski server tidak menyimpan data client, server masih membutuhkan data user untuk menentukan otentikasi setiap user yang mengakses web.
+
+Shared session yang dilakukan pada protokol REST dilakukan dengan cara pengiriman data antara client dan server setiap kali user mencoba bertukar data dengan server.
+
+### Mekanisme access token
+Token merupakan sebuah string yang di-*generate* secara *random*. Token diberikan kepada *user* setelah *user* berhasil melakukan *authentication* dan memasuki halaman *search book*. Token disimpan pada *database* beserta dengan *username*, *user id*, *expiration time*, *http user agent*, dan *ip address*. Pada *cookie*, *user* hanya perlu menyimpan token yang di-*generate* secara *random* dan untuk mengakses data - data lainnya, diperlukan untuk mengakses *database*
+
+
+### Kelebihan dan kelemahan dari arsitektur aplikasi tugas ini, dibandingkan dengan aplikasi monolitik
+
+#### Kelebihan
+
+- Setiap sistem berjalan secara mandiri. Meski data perlu diambil dari setiap *web service*, akan tetapi kerusakan pada sebuah bagian dari fungsionalitas web tidak akan menyebabkan kerusakan pada keseluruhan *web service*.
+- Fungsionalitas web dapat dikembangkan secara terpisah dan tidak bergantung satu sama lain sebesar dengan aplikasi monolitik.
+
+#### Kekurangan
+
+- Dibutuhkannya ketelitian tinggi untuk menjaga integritas data pada basis data.
+- Banyaknya komunikasi yang dilakukan antar web service menambah besar risiko terjadinya kesalahan pada saat pengiriman data.
+
 
 ### Skenario
 
@@ -113,57 +122,37 @@ Hal-hal detail yang disebutkan pada spesifikasi di atas seperti data yang disimp
 9. Jika transfer berhasil, aplikasi mengirimkan request kepada webservice buku untuk mencatat penjualan buku.
 10. Notifikasi muncul menandakan status pembelian, berhasil atau gagal.
 
-### Bonus
-
-Anda tidak dituntut untuk mengerjakan ini. Fokus terlebih dahulu menyelesaikan semua spesifikasi yang ada sebelum memikirkan bonus.
-
-1. Token bank
-
-    Ketika Anda melakukan transfer online, beberapa bank menyediakan sebuah mesin yang memberikan sebuah angka (token) yang harus dimasukan untuk memvalidasi transfer. Anda akan meniru fitur ini pada webservice bank.
-    
-    Mekanisme token menggunakan algoritma HOTP atau TOTP, algoritma hash yang digunakan dibebaskan kepada peserta, misalnya SHA1. Token berupa 8 digit angka. Informasi-informasi yang dibutuhkan untuk membangun token ini, seperti shared secret key, disimpan pada database webservice bank. Anda diperbolehkan menggunakan library HOTP/TOTP untuk membentuk token tersebut.
-    
-    Buatlah juga sebuah script (bebas, mau dalam bentuk PHP, JS, dll.) sebagai pengganti mesin token bank untuk membangun token yang akan digunakan untuk proses transfer.
-    
-    Setiap permintaan transfer yang berasal (yang memberikan uang) dari nomor kartu tersebut, harus menyertakan token yang valid. Token valid adalah token milik nomor kartu yang bersangkutan yang di-generate melalui alat (request di atas) dan belum expired. Jika transfer tidak menyertakan token yang valid, transfer akan gagal, seperti jika Anda melakukan transfer dengan saldo yang kurang.
-    
-    Maka, aplikasi pro-book memiliki field tambahan yaitu transfer token, yang terdapat pada halaman book detail saat melakukan order. Token tersebut kemudian diberikan kepada webservice buku, yang kemudian akan digunakan untuk memvalidasi transfer pembelian buku.
-    
-2. Login via Google
-    
-    Aplikasi memiliki pilihan untuk login menggunakan akun google, seperti yang sering ditemui pada aplikasi web atau game. Contohnya seperti tombol berikut pada [stack overflow](https://stackoverflow.com/). Informasi yang ditampilkan untuk user yang login dengan akun google diambil dari informasi akun google tersebut.
-    
-    ![](temp/button_example.png)
-
 ### Pembagian Tugas
-"Gaji buta dilarang dalam tugas ini. Bila tak mengerti, luangkan waktu belajar lebih banyak. Bila belum juga mengerti, belajarlah bersama-sama kelompokmu. Bila Anda sekelompok bingung, bertanyalah (bukan menyontek) ke teman seangkatanmu. Bila seangkatan bingung, bertanyalah pada asisten manapun."
-
-*Harap semua anggota kelompok mengerjakan SOAP dan REST API kedua-duanya*. Tuliskan pembagian tugas seperti berikut ini.
-
 REST :
-1. Validasi nomor kartu : 1351xxxx
-2. ...
+
+Server side :
+1. Validasi nomor kartu : 13516154, 13516151
+2. Validasi transfer : 13516154
+
+Client side :
+1. Validasi nomor kartu : 13516151
+2. Validasi transfer : 13516154
 
 SOAP :
-1. Add Produce : 1351xxxx
-2. Fungsionalitas Y : 1351xxxx
-3. ...
+
+Server side :
+1. Fungsionalitas book detail : 13516154
+2. Fungsionalitas buy book : 13516154
+3. Fungsionalitas search book : 13516130
+4. Fungsionalitas recommend book : 13516130
+
+Client side :
+1. Fungsionalitas book detail : 13516154
+2. Fungsionalitas buy book : 13516154, 13516151
+3. Fungsionalitas search book : 13516130
+4. Fungsionalitas recommend book : 13516130 
 
 Perubahan Web app :
-1. Halaman Search : 
-2. Halaman X :
-3. ...
+1. Halaman Search + Searh Result Angular: 13516130 
+2. Halaman History : 13516154
+3. Halaman Review : 13516154
+4. Halaman Book Detail : 13516154
+5. Rekomendasi pada Book Detail : 13516130
+6. Validasi Nomor Kartu pada Register dan Update Profile: 13516151
 
-Bonus :
-1. Pembangkitan token HTOP/TOTP : 
-2. Validasi token : 
-3. ...
-
-## About
-
-Asisten IF3110 2018
-
-Audry | Erick | Holy | Kevin J. | Tasya | Veren | Vincent H.
-
-Dosen : Yudistira Dwi Wardhana | Riza Satria Perdana | Muhammad Zuhri Catur Candra
 
