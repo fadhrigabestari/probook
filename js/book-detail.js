@@ -15,35 +15,17 @@ function removeErrPopUp() {
   document.getElementById('orderbackdrop').classList.add('hiddencontent');
 };
 function addOrder(orderurl) {
-  httpphp = new XMLHttpRequest();
-  httpphp.open('POST', orderurl);
-
-  contentphp = JSON.stringify({
+  http = new XMLHttpRequest();
+  content = JSON.stringify({
     'idBook': document.getElementById("idBook").value,
     'quantity': document.getElementById("norder").value
   });
 
-  httpphp.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-
-  httpsoap = new XMLHttpRequest();
-  httpsoap.open('POST', 'http://localhost:8081/api/books', true)
-
-  // build SOAP request
-  contentsoap =
-  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services/">' +
-    '<soapenv:Header/>' +
-    '<soapenv:Body>' +
-      '<ser:buyBook>' +
-        '<arg0>' + idBook + '</arg0>' +
-        '<arg1>' + quantity + '</arg1>' +
-        '<arg2>' + senderCard + '</arg2>' +
-      '</ser:buyBook>' +
-    '</soapenv:Body>' +
-  '</soapenv:Envelope>' +
-  });
-
-  httpsoap.onreadystatechange = function() {
+  http.open('POST', orderurl)
+  http.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  http.onreadystatechange = function () {
     if(this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
       responsemsg = JSON.parse(this.responseText);
       document.getElementById('ntransactionmsg').innerHTML = "Nomor Transaksi : " + responsemsg['idTransaction'];
       addPopUp();
@@ -51,7 +33,5 @@ function addOrder(orderurl) {
       addErrPopUp();
     }
   }
-
-  http.setRequestHeader('Content-type', 'text/xml');
   http.send(content);
 }

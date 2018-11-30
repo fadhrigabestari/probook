@@ -274,6 +274,7 @@ public class BookServiceImpl implements BookService {
         String query;
         ResultSet rs;
         double price = 0.0;
+        System.out.println(id);
 
         query = "select price from books where idBook = ?";
         SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
