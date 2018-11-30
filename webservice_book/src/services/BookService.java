@@ -16,7 +16,7 @@ import models.Book;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface BookService {
 	@WebMethod
-	public Book[] searchBook(String title_input)  throws Exception;
+	public Book[] searchBook(String title_input)  throws Exception, JSONException;
 	
 	@WebMethod
 	public Book detailBook(String id) throws Exception;

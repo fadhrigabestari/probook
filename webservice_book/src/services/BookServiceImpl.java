@@ -26,7 +26,7 @@ import static utilities.BookServiceUtil.toJSON;
 @WebService(endpointInterface = "services.BookService")
 public class BookServiceImpl implements BookService {
     @Override
-    public Book[] searchBook(String title_input) throws Exception {
+    public Book[] searchBook(String title_input) throws Exception, JSONException {
         SQLConnect.getConnection();
         String query;
         ResultSet rs;
