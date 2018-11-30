@@ -64,8 +64,12 @@
         </div>
       </div>
       <div class='author'>
+        <div>
         <span>Catogory :</span>
         <span id='category'><?php e($book->categories);?></span>
+        </div>
+        <span>Price :</span>
+        <span id='price>'><?php e($book->price);?></span>
       </div>
       <div>
         <h2 class='h2heading'>Order</h2>
@@ -108,19 +112,19 @@
        <h2 class='h2heading'>Recommendation</h2>
        <div class='bookdetail'>
               <div class='bookimgreview'>
-                  <img class='image' src='<?php e($recommend->item[0]->cover);?>'>
+                  <img class='image' src='<?php e($recommend->cover);?>'>
               </div>
          <div class='book'>
-            <div class='bookname' id='bookname'> <?php e($recommend->item[0]->title);?></div>
+            <div class='bookname' id='bookname'> <?php e($recommend->title);?></div>
             <div class='bookscore'>
-              <span class='bookauthor' id='bookauthor'><?php e($recommend->item[0]->authors);?></span>
+              <span class='bookauthor' id='bookauthor'><?php e($recommend->authors);?></span>
               <span>&nbsp;-&nbsp;</span>
-              <span class='bookrating'><?php e($recommend->item[0]->rating);?></span>
+              <span class='bookrating'><?php e($recommend->rating);?></span>
               <span>/5.0 (</span>
-              <span class='bookvotecount'><?php e($recommend->item[0]->ratingCount);?></span>
+              <span class='bookvotecount'><?php e($recommend->ratingCount);?></span>
               <span>&nbsp;votes)</span>
             </div>
-            <div class='bookdesc' id='bookdesc'><?php e($recommend->item[0]->description);?></div>
+            <div class='bookdesc' id='bookdesc'><?php e($recommend->description);?></div>
         </div>
         </div>
       </div>
