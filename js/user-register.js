@@ -52,7 +52,8 @@ function validateCard(inputId, requestKey, checkmarkId){
   xhr.onreadystatechange = function () {
     if(this.readyState == 4 || this.status == 200) {
       response = JSON.parse(this.responseText);
-      console.log(this.responseText);
+      console.log(response);
+      console.log(xhr.getAllResponseHeaders());
       if(response.message == 'Authentication successful') {
         showCheckmark('cardnumbercheck', 1);
       } else{
@@ -60,6 +61,7 @@ function validateCard(inputId, requestKey, checkmarkId){
       }
     }
   };
+  console.log(content);
   xhr.send(content);
 }
 
