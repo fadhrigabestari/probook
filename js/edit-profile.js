@@ -64,7 +64,7 @@ function validateCard(inputId, requestKey, checkmarkId){
   obj = {};
   obj[requestKey] = input;
   content = JSON.stringify(obj);
-  xhr.open('POST', 'http://localhost:8081/api/bank/customer');
+  xhr.open('POST', 'http://localhost:8082/api/bank/customer');
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
   xhr.onreadystatechange = function () {
     if(this.readyState == 4 || this.status == 200) {
