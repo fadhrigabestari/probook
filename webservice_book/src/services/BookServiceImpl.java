@@ -157,51 +157,54 @@ public class BookServiceImpl implements BookService {
                     }
 
                     //insert relation book - category (multivalues)
-                        for (int j=0; j< categories.length; j++) {
-                            query = "select idCategory from categorynames where name = ?";
-                            SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
-                            SQLConnect.stmt.setString(1, categories[j]);
-                            rs = SQLConnect.stmt.executeQuery();
-                            int idCategory=0;
-                            while(rs.next()) {
-                                idCategory = rs.getInt("idCategory");
-                            }
-                            query = "select idBook from bookcategories where idBook = ?";
+                    for (int j=0; j< categories.length; j++) {
+                        //cari id kategori dari kategori
+                        query = "select idCategory from categorynames where name = ?";
+                        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+                        SQLConnect.stmt.setString(1, categories[j]);
+                        rs = SQLConnect.stmt.executeQuery();
+                        int idCategory=0;
+                        while(rs.next()) {
+                            idCategory = rs.getInt("idCategory");
+                        }
+                        query = "select idBook from bookcategories where idBook = ? and idCategory = ?";
+                        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+                        SQLConnect.stmt.setString(1, idBook);
+                        SQLConnect.stmt.setString(2, String.valueOf(idCategory));
+                        rs = SQLConnect.stmt.executeQuery();
+                        if(!rs.next()) {
+                            query = "insert into bookcategories values (?,?)";
                             SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
                             SQLConnect.stmt.setString(1, idBook);
-                            rs = SQLConnect.stmt.executeQuery();
-                            if(!rs.next()) {
-                                query = "insert into bookcategories values (?,?)";
-                                SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
-                                SQLConnect.stmt.setString(1, idBook);
-                                SQLConnect.stmt.setString(2, String.valueOf(idCategory));
-                                SQLConnect.stmt.executeUpdate();
-                            }
+                            SQLConnect.stmt.setString(2, String.valueOf(idCategory));
+                            SQLConnect.stmt.executeUpdate();
                         }
+                    }
 
                     //insert relation book - author (multivalues)
-                        for (int j=0; j< authors.length; j++) {
-                            query = "select idAuthor from authornames where name = ?";
-                            SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
-                            SQLConnect.stmt.setString(1, authors[j]);
-                            rs = SQLConnect.stmt.executeQuery();
-                            int idAuthor=0;
-                            while(rs.next()) {
-                                idAuthor= rs.getInt("idAuthor");
-                            }
-                            query = "select idBook from bookauthors where idBook = ?";
+                    for (int j=0; j< authors.length; j++) {
+                        query = "select idAuthor from authornames where name = ?";
+                        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+                        SQLConnect.stmt.setString(1, authors[j]);
+                        rs = SQLConnect.stmt.executeQuery();
+                        int idAuthor=0;
+                        while(rs.next()) {
+                            idAuthor= rs.getInt("idAuthor");
+                        }
+                        query = "select idBook from bookauthors where idBook = ? and idAuthor = ?";
+                        SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
+                        SQLConnect.stmt.setString(1, idBook);
+                        SQLConnect.stmt.setString(2, String.valueOf(idAuthor));
+                        rs = SQLConnect.stmt.executeQuery();
+                        if(!rs.next()) {
+                            query = "insert into bookauthors values (?,?)";
                             SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
                             SQLConnect.stmt.setString(1, idBook);
-                            rs = SQLConnect.stmt.executeQuery();
-                            if(!rs.next()) {
-                                query = "insert into bookauthors values (?,?)";
-                                SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
-                                SQLConnect.stmt.setString(1, idBook);
-                                SQLConnect.stmt.setString(2, String.valueOf(idAuthor));
-                                SQLConnect.stmt.executeUpdate();
-                            }
+                            SQLConnect.stmt.setString(2, String.valueOf(idAuthor));
+                            SQLConnect.stmt.executeUpdate();
                         }
-                    }    
+                    }
+                }      
                 
             } catch (JSONException e) {
                 System.out.println("No books found.");
@@ -310,23 +313,87 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book recommendBook(String[] category) {
+    public Book[] recommendBook(String[] category) throws Exception {
 
-        // SQLConnect.getConnection();
-        // String query;
-        // ResultSet rs;
-        // for (int i=0; i< category.length; i++) {
-        //     query = "select idCategory from categoriesname where name = ?";
-        //     SQLConnect.stmt = SQLConnect.connection.prepareStatement(query);
-        //     SQLConnect.stmt.setString(1, category[i]);
-        //     rs = SQLConnect.stmt.executeQuery();
+        SQLConnect.getConnectionProbook();
+        String query;
+        ResultSet rs;
+        String get_url;
+        //ambil dulu id kategori
+        int[] categoriesId = new int[category.length];
 
-        //     while(rs.next()) {
-            
-        //     }
+        for (int i=0; i< category.length; i++) {
+            query = "select idCategory from categorynames where name = ?";
+            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+            SQLConnect.stmt.setString(1, category[i]);    
+            rs = SQLConnect.stmt.executeQuery();
 
-        // }
-        
-        return new Book();
+            while(rs.next()) {
+                categoriesId[i] = rs.getInt("idCategory");
+            }
+        }
+
+        int[] arrQuantity = new int[category.length];
+        String[] arrIdBook = new String[category.length];
+        String recommendedBook= "-";
+
+        int row=0;
+        for (int i=0; i< categoriesId.length; i++) {
+            String query_temp = "select count(idTransaction) from transactions natural join books natural join bookcategories where idCategory= ?";
+            SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query_temp);
+            SQLConnect.stmt.setInt(1, categoriesId[i]);
+            rs = SQLConnect.stmt.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt("count(idTransaction)") >0) {
+                    row = rs.getInt("count(idTransaction)");
+                }
+            }
+        } 
+
+        if (row>0) {
+            for (int i=0; i< categoriesId.length; i++) {
+                //ambil id buku sama jumlah order yang
+                query = "select idBook, max(sumq) as max_quantity from (select idBook, sum(quantity) as sumq from transactions natural join books natural join bookcategories where idCategory= ? group by idBook) group by idBook";
+                SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+                SQLConnect.stmt.setString(1, category[i]);
+                rs = SQLConnect.stmt.executeQuery();
+                if (rs.next()) {
+                    arrQuantity[i] = rs.getInt("max_quantity");
+                    arrIdBook[i] = rs.getString("idBook");
+                }
+            }      
+             //cek maksimum quantity
+            int max=0;
+            recommendedBook=arrIdBook[0];
+            for (int i=0; i<category.length; i++) {
+                if (arrQuantity[i]>max) {
+                    max=arrQuantity[i];
+                    recommendedBook= arrIdBook[i];
+                }
+            }
+
+        } else {
+            //random
+            String recommendedCategory="-";
+            int j=0;
+            while ((recommendedCategory.equals("-")) && (j < category.length)) {
+                if (!category[j].equals("-")) {
+                    recommendedCategory= category[j];
+                }
+                j++;
+            }
+            if (recommendedCategory.equals("-")) {
+                //cari yang gak - di database
+                query = "select name from categorynames where idCategory= 1";
+                SQLConnect.stmt = SQLConnect.connectionProbook.prepareStatement(query);
+                rs = SQLConnect.stmt.executeQuery();
+
+                while(rs.next()) {
+                    recommendedCategory= rs.getString("name");
+                }
+                recommendedBook = "subject:" + recommendedCategory;
+            }
+        } 
+       return searchBook(recommendedBook);
     }
 }
