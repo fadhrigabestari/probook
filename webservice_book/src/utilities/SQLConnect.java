@@ -28,4 +28,8 @@ public class SQLConnect {
     public static void closeConnection() throws SQLException {
         connection.close();
     }
+
+    public static void closeConnectionProbook() throws SQLException {
+        connectionProbook.close();
+    }
 }

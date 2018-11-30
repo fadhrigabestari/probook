@@ -393,6 +393,7 @@ public class BookServiceImpl implements BookService {
                 recommendedBook = "subject:" + recommendedCategory;
             }
         } 
+        SQLConnect.closeConnectionProbook();
        return searchBook(recommendedBook);
     }
 }
