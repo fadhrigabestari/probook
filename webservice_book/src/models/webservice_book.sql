@@ -6,7 +6,7 @@ DROP TABLE if exists Books;
 
 create table if not exists Books (
   idBook varchar(70) not null,
-  price int not null,
+  price double not null,
   title varchar(70) not null,
   cover varchar(255) default null,
   description text,
